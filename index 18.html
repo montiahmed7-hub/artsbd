@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<meta name="theme-color" content="#1a0000"/>
+<title>ARTS BD LTD - Railway Operator</title>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{
+    font-family:'Segoe UI',system-ui,sans-serif;
+    /* ⬇️ এখানে আপনার আপলোড করা ছবির লিংক বসান ⬇️ */
+    background: linear-gradient(rgba(10,0,0,0.3), rgba(10,0,0,0.5)), url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjLho_VfxF-nJZ_sBv-OkA3C3iZy7Nz4nMrwADUEnrM0EBypjaznXGat75nvD33IfSwow2xJ9lGzJ92VeoQPlBD-0yCOxFxf8fNg8gg_4rqRNh6YFIXRePWvgDrm3zlWJt_MzsiYSY5tnVvRk1QKdvh6lB0yC1Jq-mlqjLzOSSnNv6DL5EFT7rfsZ_V5wGw/s320/WhatsApp%20Image%202026-10-12%20at%2022.05.23.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    color:#ffffff;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    overflow-x:hidden;
+}
+.hide{display:none!important}
+#login{flex:1;display:flex;align-items:center;justify-content:center;padding:20px;background:transparent}
+.card{
+    background: rgba(40, 10, 10, 0.25); /* Highly transparent */
+    backdrop-filter: blur(20px); /* iOS Liquid Glass effect */
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 26px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 150, 150, 0.15);
+}
+.logo{text-align:center;margin-bottom:20px}
+.logo h1{font-size:32px;letter-spacing:4px;background:linear-gradient(90deg,#ef4444,#dc2626);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
+.logo p{font-size:12px;color:#fca5a5;margin-top:4px;letter-spacing:1px}
+label{font-size:11px;color:#fca5a5;display:block;margin:8px 0 3px;font-weight:600}
+input,select,textarea{
+    width:100%;padding:10px;border-radius:12px;
+    border: 1px solid rgba(255, 150, 150, 0.2);
+    background: rgba(40, 10, 10, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color:#ffffff;font-size:13px;font-family:inherit;outline:none;
+    transition: all 0.2s;
+}
+input:focus,select:focus{border-color:#ef4444;background:rgba(42,5,5,0.5)}
+button{cursor:pointer;font-family:inherit;font-weight:600;border:none;border-radius:10px;transition:.15s}
+.btn{width:100%;padding:12px;margin-top:18px;background:linear-gradient(90deg,#dc2626,#991b1b);color:#ffffff;font-size:15px;box-shadow: 0 4px 15px rgba(220,38,38,0.4);}
+.btn:active{transform:scale(.98)}
+header{
+    background: rgba(26, 0, 0, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 14px 16px;
+    display:flex;align-items:center;justify-content:space-between;
+    border-bottom: 1px solid rgba(255, 150, 150, 0.15);
+    position:sticky;top:0;z-index:10;
+}
+header h2{font-size:24px;color:#ef4444;letter-spacing:2px}
+header .who{font-size:11px;color:#fca5a5;text-align:right;line-height:1.4}
+main{flex:1;overflow-y:auto;padding:12px 12px 100px;background:transparent} 
+.tab{display:none}
+.tab.active{display:block}
+h3{font-size:13px;color:#fca5a5;margin-bottom:6px;font-weight:700; text-shadow: 0 1px 3px #000;}
+.box{
+    background: rgba(40, 10, 10, 0.25);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 150, 150, 0.15);
+    border-radius: 16px;
+    padding: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.row{display:flex;gap:6px}
+.row>*{flex:1}
+.pill{display:inline-block;padding:2px 6px;border-radius:20px;font-size:10px;font-weight:700}
+.pill.on{background:#450a0a;color:#fca5a5;border:1px solid #dc2626}
+.pill.off{background:#7f1d1d;color:#ffffff}
+.pill.wait{background:#450a0a;color:#fca5a5;border:1px solid #ef4444}
+.pill.leave{background:#7c2d12;color:#fdba74}
+.pill.absent{background:#450a0a;color:#fca5a5;border:1px solid #dc2626}
+.pill.replace{background:#7f1d1d;color:#ffffff}
+
+.train-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.train-form-grid .full-width { grid-column: span 2; }
+.train-form-grid label { margin-top: 0; font-size: 9px; margin-bottom: 1px; color: #fca5a5; }
+.train-form-grid input, .train-form-grid select { padding: 6px; font-size: 10px; border-radius: 8px; background: rgba(40, 10, 10, 0.3); border: 1px solid rgba(255, 150, 150, 0.15);}
+#btnAddTrain { padding: 8px; font-size: 11px; margin-top: 8px; background: linear-gradient(90deg,#dc2626,#991b1b); }
+#tab-trn .box { padding: 8px; margin-bottom: 8px; }
+#tab-trn h3 { font-size: 11px; margin-bottom: 4px; }
+.autofill-hint { font-size: 9px; color: #ef4444; margin-top: 2px; display: block; }
+
+.train-table { width: 100%; border-collapse: collapse; margin-top: 3px; background: transparent; border-radius: 8px; overflow: hidden; }
+.train-table th { padding: 6px 2px; color: #ffffff; font-weight: 800; text-align: center; font-size: 10px; background: linear-gradient(90deg, rgba(220,38,38,0.7), rgba(153,27,27,0.7)); border-bottom: 1px solid #ef4444; white-space: nowrap; text-shadow: 0 1px 2px rgba(0,0,0,0.5); backdrop-filter: blur(5px);}
+.train-main-row { background: rgba(40, 10, 10, 0.2); transition: background 0.3s; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.train-main-row td { padding: 5px 2px; text-align: center; border-top: 1px solid rgba(255, 150, 150, 0.1); font-size: 10px; font-weight: 800; }
+.train-no-badge { display: inline-block; padding: 2px 5px; border-radius: 6px; background: rgba(127,29,29,0.8); color: #ffffff; font-weight: 800; font-size: 11px; border: 1px solid #dc2626; }
+.train-name-badge { display: inline-block; padding: 2px 5px; border-radius: 6px; background: rgba(220,38,38,0.8); color: #ffffff; font-weight: 800; font-size: 11px; white-space: nowrap; }
+.train-main-row .train-name { text-align: left; padding-left: 3px; }
+.train-main-row .station-badge { display: inline-block; padding: 2px 5px; border-radius: 6px; background: rgba(220,38,38,0.8); color: #ffffff; font-size: 11px; font-weight: 800; white-space: nowrap; }
+.train-main-row .platform-badge { display: inline-block; padding: 2px 5px; border-radius: 6px; background: rgba(127,29,29,0.8); color: #ffffff; font-size: 11px; font-weight: 800; border: 1px solid #dc2626; }
+.train-main-row .dest-badge { display: inline-block; padding: 2px 5px; border-radius: 6px; background: rgba(153,27,27,0.8); color: #ffffff; font-size: 11px; font-weight: 800; border: 1px solid #ef4444; white-space: nowrap; }
+.train-main-row .del-btn { background: rgba(127,29,29,0.8); color: #ffffff; padding: 2px 5px; border-radius: 4px; font-size: 9px; border: 1px solid #dc2626; cursor: pointer; font-weight: 700; }
+.train-main-row .departed-btn { background: rgba(153,27,27,0.8); color: #ffffff; padding: 2px 5px; border-radius: 4px; font-size: 9px; border: 1px solid #ef4444; cursor: pointer; font-weight: 700; margin-right: 2px; white-space: nowrap; }
+.train-detail-row { background: rgba(20, 5, 5, 0.4); border-bottom: 1px solid rgba(255, 150, 150, 0.1); backdrop-filter: blur(10px); }
+.train-detail-row td { padding: 8px 3px; text-align: center; }
+.detail-item { display: inline-block; margin: 0 4px; font-size: 11px; color: #fca5a5; font-weight: 800; letter-spacing: 0.2px; }
+.detail-item span { color: #ef4444; font-weight: 900; }
+.detail-item .time-value { color: #ffffff; font-weight: 900; font-size: 11px; background: rgba(127,29,29,0.6); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(220,38,38,0.5); display: inline-block; margin-left: 3px; }
+.train-empty { text-align: center; color: #fca5a5; padding: 15px; font-size: 11px; }
+
+/* ⬇️⬇️⬇️ হলুদ লেখার জন্য CSS ⬇️⬇️⬇️ */
+.row-yellow-text .detail-item,
+.row-yellow-text .detail-item span,
+.row-yellow-text .detail-item .time-value,
+.row-yellow-text .detail-item .departed-time-big,
+.row-yellow-text .train-no-badge,
+.row-yellow-text .train-name-badge,
+.row-yellow-text .platform-badge,
+.row-yellow-text .dest-badge,
+.row-yellow-text .station-badge,
+.row-yellow-text .departed-text-below {
+    color: #facc15 !important;
+    border-color: #facc15 !important;
+    text-shadow: none !important;
+}
+/* ⬆️⬆️⬆️ হলুদ লেখার CSS শেষ ⬆️⬆️⬆️ */
+
+@keyframes blinkYellowRow { 0%, 100% { background-color: rgba(127,29,29,0.8); } 50% { background-color: rgba(239,68,68,0.8); } }
+@keyframes blinkRedRow { 0%, 100% { background-color: rgba(127,29,29,0.8); } 50% { background-color: rgba(255,0,0,0.8); } }
+.train-main-row.row-warning { animation: blinkYellowRow 1s infinite; }
+.train-main-row.row-warning td { color: #ffffff !important; font-weight: 900; }
+.train-main-row.row-alert { animation: blinkRedRow 1s infinite; }
+.train-main-row.row-alert td { color: #ffffff !important; font-weight: 900; }
+.train-main-row.row-departed { opacity: 1; background: rgba(10, 0, 0, 0.6); }
+.train-main-row.row-departed .train-name-badge { background: #7f1d1d; color: #ffffff; }
+.train-main-row.row-departed .station-badge { background: #7f1d1d; color: #ffffff; }
+.train-main-row.row-departed .platform-badge { background: #7f1d1d; color: #ffffff; border: 1px solid #dc2626; }
+.train-main-row.row-departed .dest-badge { background: #7f1d1d; color: #ffffff; border: 1px solid #dc2626; }
+.train-detail-row.row-warning { background-color: rgba(127,29,29,0.7); }
+.train-detail-row.row-alert { background-color: rgba(127,29,29,0.7); }
+
+@keyframes blinkRedCrossThin { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+.train-no-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; }
+.departed-cross-mark { font-size: 28px; color: #ff0000; font-weight: 100; line-height: 0.6; letter-spacing: -2px; animation: blinkRedCrossThin 1s infinite; text-shadow: 0 0 6px #ff0000, 0 0 10px #ff0000; display: block; pointer-events: none; font-family: 'Arial', sans-serif; }
+.departed-train-no-below { display: inline-block; padding: 2px 5px; border-radius: 6px; background: rgba(127,29,29,0.8); color: #ffffff; font-weight: 800; font-size: 11px; border: 1px solid #dc2626; }
+
+@keyframes blinkAndZoomText { 0% { opacity: 1; transform: scale(1); text-shadow: 0 0 4px #ff0000; } 50% { opacity: 0.7; transform: scale(1.1); text-shadow: 0 0 10px #ff0000, 0 0 18px #ff0000; } 100% { opacity: 1; transform: scale(1); text-shadow: 0 0 4px #ff0000; } }
+.departed-text-below { display: block; color: #ff0000; font-weight: 900; font-size: 11px; margin-top: 2px; letter-spacing: 0.3px; animation: blinkAndZoomText 1.2s infinite; background: rgba(255,0,0,0.15); padding: 1px 4px; border-radius: 3px; }
+
+@keyframes pulseRedZoom { 0%, 100% { transform: scale(1); text-shadow: 0 0 4px rgba(220,38,38,0.6); } 50% { transform: scale(1.12); text-shadow: 0 0 10px #dc2626, 0 0 20px #dc2626; } }
+.departed-time-big { display: inline-block; font-size: 13px; font-weight: 900; color: #ffffff !important; animation: pulseRedZoom 1.2s infinite; background: #dc2626; padding: 2px 8px; border-radius: 4px; margin: 0 3px; }
+.header-date { color: #ef4444; font-size: 12px; font-weight: 700; margin-left: auto; }
+
+.my-profile-box { display: flex; align-items: stretch; gap: 12px; background: rgba(40, 10, 10, 0.2); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 14px; border-radius: 16px; border: 1px solid rgba(255, 150, 150, 0.15); margin-bottom: 12px; flex-wrap: wrap; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);}
+.my-profile-left { display: flex; align-items: center; gap: 12px; flex: 1.2; min-width: 200px; }
+.my-profile-photo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255, 150, 150, 0.3); flex-shrink: 0; box-shadow: 0 0 15px rgba(220,38,38,0.3);}
+.my-profile-info { flex: 1; }
+.my-profile-info h4 { font-size: 18px; font-weight: 800; color: #ffffff; margin-bottom: 4px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.5);}
+.my-profile-info p { font-size: 12px; color: #fca5a5; margin: 2px 0; line-height: 1.3; text-shadow: 0 1px 2px rgba(0,0,0,0.5);}
+.my-profile-info p span { color: #ef4444; display: inline-block; width: 65px; font-weight: 600; }
+.weather-clock-widget { flex: 1; display: flex; flex-direction: row; justify-content: space-between; align-items: center; background: linear-gradient(135deg, rgba(42,5,5,0.4), rgba(26,0,0,0.4)); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 150, 150, 0.15); border-radius: 16px; padding: 15px; gap: 15px; min-width: 220px; position: relative; overflow: hidden; box-shadow: inset 0 0 15px rgba(220,38,38,0.1), 0 8px 32px 0 rgba(0, 0, 0, 0.3);}
+.wc-left { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; flex: 1; }
+.wc-time { font-size: 28px; font-weight: 300; letter-spacing: 1px; line-height: 1; text-shadow: 1px 1px 4px rgba(0,0,0,0.8); color: #ffffff; display: flex; align-items: baseline; gap: 4px; }
+.wc-time .ampm { font-size: 14px; font-weight: 600; color: #fca5a5; }
+.wc-date { font-size: 12px; color: #fca5a5; font-style: italic; margin-top: 6px; letter-spacing: 0.5px; font-weight: 600; }
+.wc-details { font-size: 10px; color: #94a3b8; margin-top: 8px; font-weight: 600; }
+.wc-right { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; }
+.wc-icon-temp { display: flex; align-items: center; gap: 8px; }
+.wc-icon { font-size: 36px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); line-height: 1; }
+.wc-temp { font-size: 24px; font-weight: 800; text-shadow: 1px 1px 4px rgba(0,0,0,0.8); color: #ffffff; }
+.wc-condition { font-size: 12px; font-weight: 700; color: #ef4444; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.big-btn{padding:10px;border-radius:12px;font-size:12px;width:100%;color:#ffffff;margin-bottom:8px;display:block;text-align:center; font-weight: 700; box-shadow: 0 4px 15px rgba(0,0,0,0.3); backdrop-filter: blur(5px);}
+.big-btn:last-child{margin-bottom:0}
+.row .big-btn{margin-bottom:0}
+.green{background:linear-gradient(90deg,rgba(220,38,38,0.8),rgba(153,27,27,0.8))}
+.red{background:linear-gradient(90deg,rgba(127,29,29,0.8),rgba(69,10,10,0.8));border:1px solid #dc2626}
+.blue{background:linear-gradient(90deg,rgba(153,27,27,0.8),rgba(127,29,29,0.8))}
+.orange{background:linear-gradient(90deg,rgba(185,28,28,0.8),rgba(127,29,29,0.8))}
+.purple{background:linear-gradient(90deg,rgba(153,27,27,0.8),rgba(69,10,10,0.8))}
+.gray{background:linear-gradient(90deg,rgba(69,10,10,0.8),rgba(26,0,0,0.8));border:1px solid #7f1d1d}
+
+.dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.dashboard-grid .big-btn { margin-bottom: 0; padding: 10px 6px; font-size: 12px; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 6px; height: auto; line-height: 1.2; }
+.dashboard-grid .big-btn span.icon { font-size: 16px; display: inline; }
+.admin-full-width { grid-column: span 2; }
+.disabled-btn { opacity: 0.4; pointer-events: none; }
+
+.op-card{background:rgba(40, 10, 10, 0.2); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius:12px; padding:12px; margin-bottom:10px; display:flex; flex-direction:column; gap:8px; box-shadow:0 8px 32px 0 rgba(0, 0, 0, 0.3); border:1px solid rgba(255, 150, 150, 0.15); position:relative;}
+.op-header{display:flex;align-items:center;gap:10px}
+.op-photo-wrap{position:relative;width:44px;height:44px;flex-shrink:0}
+.op-photo{width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid rgba(255, 150, 150, 0.3);background:rgba(26,0,0,0.5);}
+.op-info{flex:1}
+.op-name{font-size:14px;font-weight:800;color:#ffffff;line-height:1.2; display:flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; width: 100%;}
+.op-name-text { flex: 1; min-width: 150px; }
+.card-date { color: #ef4444; font-size: 10px; font-weight: 600; }
+.op-station{font-size:11px;color:#fca5a5;margin-top:2px;font-weight:600;display:flex;align-items:center;gap:4px;}
+.gps-icon{color:#dc2626;font-size:18px;line-height:1;}
+.op-status-text{font-size:11px;font-weight:800;margin-top:2px;letter-spacing:0.3px}
+
+.op-location-btn { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: rgba(40, 10, 10, 0.4); backdrop-filter: blur(10px); border: 1px solid rgba(255, 150, 150, 0.3); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer; transition: transform 0.2s, background 0.2s; text-decoration: none; }
+.op-location-btn:active { transform: scale(0.9); background: rgba(69, 10, 10, 0.6); }
+.op-location-btn img { width: 32px; height: 32px; object-fit: contain; }
+.op-location-missing { font-size: 11px; color: #fca5a5; font-weight: bold; background: rgba(69,10,10,0.6); padding: 4px 8px; border-radius: 6px; border: 1px solid #7f1d1d; }
+
+.top-call-wrapper{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;align-items:center;z-index:5;}
+.top-call-btn{ background:#22c55e; color:#dc2626; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; text-decoration:none; box-shadow:0 4px 15px rgba(34,197,94,0.4); border:2px solid #16a34a; }
+.top-call-btn span { display: inline-block; filter: brightness(0) saturate(100%) invert(14%) sepia(93%) saturate(7488%) hue-rotate(359deg) brightness(93%) contrast(115%); }
+.top-call-btn:active{transform:scale(0.95);}
+.call-now-text{font-size:8px;color:#22c55e;font-weight:800;margin-top:2px;white-space:nowrap;}
+
+@keyframes blinkGreen {0%,100%{opacity:1;box-shadow:0 0 8px #22c55e}50%{opacity:0.3;box-shadow:none}}
+@keyframes blinkYellow {0%,100%{opacity:1;box-shadow:0 0 6px #ef4444}50%{opacity:0.2;box-shadow:none}}
+@keyframes blinkRed {0%,100%{opacity:1;box-shadow:0 0 6px #ff0000}50%{opacity:0.2;box-shadow:none}}
+@keyframes blinkRedText {0%,100%{opacity:1}50%{opacity:0.3}}
+@keyframes blinkGreenIcon {0%,100%{opacity:1;transform:translate(-50%,-50%) scale(1);text-shadow:0 0 10px #22c55e,0 0 20px #22c55e}50%{opacity:0.3;transform:translate(-50%,-50%) scale(0.85);text-shadow:none}}
+@keyframes blinkOrangeIcon {0%,100%{opacity:1;transform:translate(-50%,-50%) scale(1);text-shadow:0 0 10px #dc2626,0 0 20px #dc2626}50%{opacity:0.3;transform:translate(-50%,-50%) scale(0.85);text-shadow:none}}
+
+.status-indicator{position:absolute;bottom:0;right:0;width:12px;height:12px;border-radius:50%;border:2px solid #1a0000}
+.indicator-active{background-color:#22c55e;animation:blinkGreen 1.5s infinite}
+.indicator-out{background-color:#dc2626;animation:blinkYellow 1.5s infinite}
+.indicator-absent{background-color:#ff0000;animation:blinkRed 1.5s infinite}
+
+.active-check-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:34px;color:#22c55e;font-weight:900;line-height:1;z-index:10;animation:blinkGreenIcon 1.5s infinite;pointer-events:none;}
+
+.checkout-cross-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:34px;color:#dc2626;font-weight:900;line-height:1;z-index:10;animation:blinkOrangeIcon 1.5s infinite;pointer-events:none;}
+.absent-cross{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:34px;color:#ff0000;font-weight:900;line-height:1;z-index:10;animation:blinkRed 1.5s infinite;pointer-events:none;}
+
+.op-replace-text {font-size:10px;color:#fca5a5;margin-top:2px;}
+.replace-name {color:#ff0000;font-weight:800;animation:blinkRedText 1.5s infinite;display:inline-block;}
+
+.op-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:8px}
+.op-btn{padding:8px 2px;border-radius:8px;font-size:12px;font-weight:800;text-align:center;background:rgba(40, 10, 10, 0.3) !important; backdrop-filter: blur(5px); cursor:pointer;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:.2s;text-decoration:none; color:#ffffff !important; border:1px solid rgba(255, 150, 150, 0.2);}
+.op-btn:active{transform:scale(.95)}
+.op-btn small{font-size:9px;font-weight:600;margin-top:2px;opacity:0.9;color:#fca5a5;}
+.btn-in{border:1px solid rgba(239, 68, 68, 0.5);}
+.btn-out{border:1px solid rgba(239, 68, 68, 0.5);}
+.btn-replace{border:1px solid rgba(239, 68, 68, 0.5);}
+
+.officer-card{background:rgba(40, 10, 10, 0.2); backdrop-filter: blur(20px); border:1px solid rgba(255, 150, 150, 0.15); border-radius:12px; padding:10px; margin-bottom:10px; display:flex; align-items:center; gap:10px; box-shadow:0 4px 15px rgba(0,0,0,0.3);}
+.officer-thumb{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(255, 150, 150, 0.3);flex-shrink:0}
+.officer-info{flex:1}
+.officer-name{font-size:14px;font-weight:700;color:#ffffff}
+.officer-desig{font-size:12px;color:#ef4444}
+.officer-call-btn{ background:#22c55e; color:#dc2626; padding:6px 10px; border-radius:8px; font-size:12px; text-decoration:none; white-space:nowrap; font-weight:700; border:1px solid #16a34a; }
+.officer-call-btn span { filter: brightness(0) saturate(100%) invert(14%) sepia(93%) saturate(7488%) hue-rotate(359deg) brightness(93%) contrast(115%); }
+
+#chatBox{height:calc(100vh - 250px);overflow-y:auto;padding:12px;background:rgba(40, 10, 10, 0.2); backdrop-filter: blur(20px); border-radius:16px; border:1px solid rgba(255, 150, 150, 0.15); margin-bottom:12px;}
+.msg{margin-bottom:10px;max-width:80%}
+.msg .nm{font-size:10px;color:#ef4444;margin-bottom:2px;font-weight:700}
+.msg .tx{background:rgba(40, 10, 10, 0.4); backdrop-filter: blur(10px); padding:8px 12px; border-radius:12px; font-size:12px; word-wrap:break-word; border:1px solid rgba(255, 150, 150, 0.15); color:#ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.2);}
+.msg .tx img { max-width: 100%; border-radius: 10px; margin-bottom: 5px; }
+.msg.me{margin-left:auto;text-align:right}
+.msg.me .tx{background:rgba(220, 38, 38, 0.7); border-color:rgba(239, 68, 68, 0.5); color:#ffffff; backdrop-filter: blur(10px);}
+.msg.me .nm{color:#fca5a5}
+.chat-in{display:flex;gap:8px; align-items: center;}
+.chat-in input[type="text"]{flex:1; padding: 12px; background: rgba(40, 10, 10, 0.3);}
+.chat-in button{flex: 0 0 55px; height: 46px; display: flex; align-items: center; justify-content: center; font-size: 18px; border-radius: 12px;}
+#btnChatCamera { background: rgba(69,10,10,0.8); border: 1px solid rgba(220,38,38,0.5); }
+#btnSend { background:#dc2626; color:#fff; border:1px solid #ef4444; }
+
+nav{ position:fixed; bottom:0; left:0; right:0; background:rgba(26, 0, 0, 0.3); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top:1px solid rgba(255, 150, 150, 0.15); display:flex; justify-content:space-around; align-items:center; padding:6px 4px; z-index:20;}
+nav button{ flex:1; max-width:65px; aspect-ratio:1 / 1; background:rgba(40, 10, 10, 0.3); backdrop-filter: blur(10px); border:1px solid rgba(255, 150, 150, 0.15); border-radius:12px; color:#fca5a5; font-size:9px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:2px; margin:0 3px; box-shadow:0 4px 15px rgba(0,0,0,0.3); transition:all 0.2s ease; position: relative;}
+nav button .ic{ font-size:18px; }
+nav button.active{ color:#ef4444; border-color:#ef4444; background:rgba(42, 5, 5, 0.6); box-shadow:0 0 15px rgba(220,38,38,0.5); }
+
+@keyframes blinkChatNotification {
+    0%, 100% { color: #fca5a5; border-color: rgba(255, 150, 150, 0.15); background: rgba(40, 10, 10, 0.3); box-shadow: none; }
+    50% { color: #ffffff; border-color: #ff0000; background: rgba(220, 38, 38, 0.8); box-shadow: 0 0 15px #ff0000; transform: scale(1.05); }
+}
+.chat-notification {
+    animation: blinkChatNotification 1s infinite !important;
+}
+
+.empty{text-align:center;color:#fca5a5;font-size:12px;padding:20px}
+#camModal,#reportModal,#leaveModal,#adminModal,#rosterModal,#leaveAppModal,#empRecordModal{position:fixed;inset:0;background:rgba(10,0,0,.6);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);}
+#camModal video{width:100%;border-radius:12px;max-height:60vh;background:#000;object-fit:cover}
+.roster-table{width:100%;border-collapse:collapse;font-size:10px}
+.roster-table th,.roster-table td{border:1px solid rgba(255, 150, 150, 0.15);padding:6px;text-align:center}
+.roster-table th{background:linear-gradient(90deg, rgba(26,0,0,0.6), rgba(42,5,5,0.6));color:#ef4444;font-size:10px; backdrop-filter: blur(5px);}
+.roster-table td{background:rgba(40, 10, 10, 0.3);color:#ffffff; backdrop-filter: blur(5px);}
+.roster-table td.has-name{color:#ef4444;font-weight:700}
+.roster-table td.empty-cell{color:#7f1d1d}
+
+.auth-section { display: flex; justify-content: space-between; margin-top: 15px; background: rgba(40, 10, 10, 0.3); padding: 12px; border-radius: 12px; border: 1px solid rgba(255, 150, 150, 0.15); backdrop-filter: blur(10px); }
+.auth-box { text-align: center; width: 48%; }
+.auth-box h5 { font-size: 11px; color: #fca5a5; margin-bottom: 8px; }
+.auth-btn { padding: 6px 10px; font-size: 10px; border-radius: 6px; margin: 3px; cursor: pointer; color: white; backdrop-filter: blur(5px); }
+.auth-approve { background: rgba(34, 197, 94, 0.8); border: 1px solid #16a34a; }
+.auth-reject { background: rgba(220, 38, 38, 0.8); border: 1px solid #991b1b; }
+
+.emp-list-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid rgba(255, 150, 150, 0.1); cursor: pointer; background: rgba(40, 10, 10, 0.2); backdrop-filter: blur(10px); }
+.emp-list-item:last-child { border-bottom: none; }
+.emp-list-item:hover { background: rgba(220, 38, 38, 0.2); }
+.emp-detail-view { background: rgba(40, 10, 10, 0.3); padding: 12px; border-radius: 12px; border: 1px solid rgba(255, 150, 150, 0.15); margin-top: 10px; backdrop-filter: blur(15px); }
+
+.emp-profile-header { display: flex; gap: 15px; margin-bottom: 15px; align-items: flex-start; }
+.emp-photo-container { width: 100px; height: 100px; flex-shrink: 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 150, 150, 0.3); background: rgba(10,0,0,0.3); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3);}
+.emp-photo-container img { width: 100%; height: 100%; object-fit: cover; }
+.emp-info-container { flex: 1; }
+.emp-info-container h4 { font-size: 16px; color: #ef4444; margin-bottom: 5px; font-weight: 800; }
+.emp-detail-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px; color: #fca5a5; border-bottom: 1px dashed rgba(255, 150, 150, 0.1); padding-bottom: 3px; }
+.emp-detail-row span { color: #ffffff; font-weight: 600; text-align: right; }
+
+.emp-history-section { margin-top: 15px; background: rgba(20, 5, 5, 0.4); padding: 12px; border-radius: 12px; border: 1px solid rgba(255, 150, 150, 0.15); backdrop-filter: blur(10px); }
+.emp-history-section h5 { color: #fca5a5; font-size: 13px; margin-bottom: 10px; border-bottom: 1px solid rgba(255, 150, 150, 0.1); padding-bottom: 5px; }
+.emp-history-text { font-size: 12px; color: #e2e8f0; line-height: 1.5; white-space: pre-wrap; }
+
+.edit-mode-input { font-size: 12px; padding: 8px; border-radius: 8px; width: 100%; margin-bottom: 10px; background: rgba(40, 10, 10, 0.3); border-color: rgba(255, 150, 150, 0.15); color: white; backdrop-filter: blur(5px);}
+.edit-mode-label { font-size: 11px; color: #fca5a5; margin-bottom: 3px; display: block; }
+.photo-upload-wrap { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.photo-upload-wrap input[type="file"] { font-size: 10px; width: 100px; }
+</style>
+</head>
+<body>
+
+<div id="login">
+  <div class="card">
+    <div class="logo"><h1>ARTS</h1><p>RAILWAY OPERATOR SYSTEM</p></div>
+    <label>Operator ID (মোবাইল নম্বর)</label><input id="inOpId" placeholder="01XXXXXXXXX" inputmode="numeric"/>
+    <label>নাম</label><input id="inName" placeholder="তোমার পূর্ণ নাম"/>
+    <label>স্টেশন</label><input id="inStn" placeholder="যেমন: কমলাপুর / বিমানবন্দর"/>
+    <label>পদবি</label><input id="inDesig" placeholder="কম্পিউটার অপারেটর"/>
+    <label>ঠিকানা</label><input id="inAddress" placeholder="আপনার ঠিকানা (গ্রাম/শহর)"/>
+    <label>PIN (৪ ডিজিট)</label><input id="inPin" type="password" inputmode="numeric" maxlength="4" placeholder="****"/>
+    <button class="btn" id="btnLogin">লগইন / রেজিস্টার</button>
+    <p id="loginMsg" style="color:#fca5a5;font-size:12px;text-align:center;margin-top:10px"></p>
+  </div>
+</div>
+
+<div id="app" class="hide" style="flex:1;display:flex;flex-direction:column">
+  <header><h2>ARTS BD LTD</h2><div class="who"><div id="hName">-</div><div id="hStn">-</div></div></header>
+  <main>
+    <div class="tab active" id="tab-att">
+      <div class="box">
+        <h3 style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <span>আজকের হাজিরা</span>
+          <span id="headerDate" class="header-date"></span>
+        </h3>
+        <div id="myAtt" class="empty">লোড হচ্ছে...</div>
+        
+        <div class="row" style="margin-top:8px">
+          <button class="big-btn green" id="btnIn">📸 Check In</button>
+          <button class="big-btn red" id="btnOut">⛔ Check Out</button>
+        </div>
+        
+        <div class="dashboard-grid">
+            <button class="big-btn orange" id="btnRest"><span class="icon">🏖️</span> সাপ্তাহিক ছুটি / Weekend</button>
+            <button class="big-btn purple" id="btnLeaveApp"><span class="icon">📝</span> ছুটির আবেদন / Leave Application</button>
+            
+            <button class="big-btn purple" id="btnLeave"><span class="icon">✈️</span> ছুটিতে আছি (Leave)</button>
+            <button class="big-btn gray" id="btnRoster"><span class="icon">📅</span> সাপ্তাহিক রোস্টার</button>
+            
+            <button class="big-btn blue" id="btnReport"><span class="icon">📊</span> মাসিক রিপোর্ট</button>
+            <button class="big-btn blue" id="btnEmployeeRecords"><span class="icon">📂</span> সকল কর্মকর্তার তথ্য</button>
+            
+            <button class="big-btn red hide admin-full-width" id="btnAdmin"><span class="icon">🔴</span> অ্যাডমিন প্যানেল</button>
+        </div>
+        
+      </div>
+      <h3>অপারেটর স্ট্যাটাস</h3>
+      <div id="attList"><div class="empty">লোড হচ্ছে...</div></div>
+    </div>
+
+    <div class="tab" id="tab-trn">
+      <div class="box">
+        <h3>🚆 নতুন ট্রেনের তথ্য <span style="font-size:9px;color:#ef4444">(নং দিলে অটো ফিল হবে)</span></h3>
+        <div class="train-form-grid">
+          <div><label>ট্রেন নং</label><input id="tNo" placeholder="701" autocomplete="off"/><small class="autofill-hint">যেমন: 769, 816, 709, 788...</small></div>
+          <div><label>ট্রেনের নাম</label><input id="tName" placeholder="সুবর্ণ এক্সপ্রেস"/></div>
+          <div><label>প্ল্যাটফর্ম নং</label><input id="tPlatform" placeholder="৪"/></div>
+          <div><label>গন্তব্য</label><input id="tDestination" placeholder="চট্টগ্রাম"/></div>
+          <div><label>ছাড়ার সময়</label><input id="tDep" placeholder="10:30"/></div>
+          <div><label>সম্ভাব্য সময়</label><input id="tDepExp" placeholder="10:30"/></div>
+          <div><label>বিলম্বিত সময়</label><input id="tDepDelay" placeholder="10:45"/></div>
+          <div><label>ট্রেনের দায়িত্বে</label><input id="tInCharge" placeholder="মোঃ করিম"/></div>
+          <div><label>স্টেশন</label>
+            <select id="tStation">
+              <option value="">-- সিলেক্ট --</option>
+              <option>কমলাপুর</option>
+              <option>বিমানবন্দর</option>
+              <option>রাজশাহী</option>
+              <option>খুলনা</option>
+              <option>সিলেট</option>
+              <option>চট্টগ্রাম</option>
+            </select>
+          </div>
+          <div><label>সাপ্তাহিক বন্ধ</label>
+            <select id="tWeeklyOff">
+              <option value="">কোনো বন্ধ নেই</option>
+              <option>শনিবার</option><option>রবিবার</option><option>সোমবার</option>
+              <option>মঙ্গলবার</option><option>বুধবার</option><option>বৃহস্পতিবার</option><option>শুক্রবার</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn" id="btnAddTrain" style="margin-top:5px">➕ ট্রেন যোগ করো</button>
+      </div>
+      <h3>📋 সব ট্রেন</h3>
+      <div id="trainList" class="train-empty">কোনো ট্রেন নেই</div>
+    </div>
+
+    <div class="tab" id="tab-chat">
+      <h3>অপারেটর চ্যাট</h3>
+      <div id="chatBox"></div>
+      <div class="chat-in">
+          <input type="file" id="chatImageFile" accept="image/*" capture="camera" style="display:none;">
+          <button id="btnChatCamera" title="ছবি পাঠান">📷</button>
+          <input id="chatMsg" placeholder="মেসেজ লিখো..." type="text"/>
+          <button id="btnSend">➤</button>
+      </div>
+    </div>
+
+    <div class="tab" id="tab-com">
+      <div class="box"><h3>🏢 কোম্পানির কাজ</h3><p id="companyDesc" style="font-size:13px;line-height:1.6;color:#fca5a5">লোড হচ্ছে...</p></div>
+      <div class="box"><h3>👥 কোম্পানির কর্মকর্তাবৃন্দ</h3><div id="officerList"></div></div>
+    </div>
+
+    <div class="tab" id="tab-me">
+      <div class="box">
+        <h3>প্রোফাইল</h3>
+        <div class="item"><div><div class="t1" id="pName">-</div><div class="t2" id="pDesig">-</div></div></div>
+        <div class="item"><div><div class="t1">স্টেশন</div><div class="t2" id="pStn">-</div></div></div>
+        <div class="item"><div><div class="t1">মোট ডিউটিতে</div><div class="t2" id="pCount">0</div></div></div>
+      </div>
+      <div class="box"><h3>অ্যাপ শেয়ার করো</h3><button class="btn blue" id="btnShare">🔗 শেয়ার করুন</button></div>
+      <button class="btn red" id="btnLogout" style="margin-top:6px">লগআউট</button>
+    </div>
+  </main>
+  <nav>
+    <button class="active" data-tab="att"><span class="ic">🕒</span>হাজিরা</button>
+    <button data-tab="trn"><span class="ic">🚆</span>ট্রেন</button>
+    <button data-tab="chat"><span class="ic">💬</span>চ্যাট</button>
+    <button data-tab="com"><span class="ic">🏢</span>কোম্পানি</button>
+    <button data-tab="me"><span class="ic">👤</span>প্রোফাইল</button>
+  </nav>
+</div>
+
+<div id="camModal" class="hide">
+  <div class="card" style="max-width:400px;text-align:center">
+    <h3>📸 লাইভ সেলফি দিন</h3>
+    <p style="font-size:11px;color:#fca5a5;margin-bottom:10px">Check In করার জন্য আপনার ছবি তুলুন</p>
+    <video id="camera" autoplay playsinline></video><canvas id="canvas" width="200" height="200" style="display:none"></canvas>
+    <div class="row" style="margin-top:14px"><button class="big-btn green" id="btnCapture" style="margin:0">ছবি তুলুন</button><button class="big-btn red" id="btnCancelCam" style="margin:0">বাতিল</button></div>
+  </div>
+</div>
+
+<div id="leaveModal" class="hide">
+  <div class="card" style="max-width:400px;text-align:center">
+    <h3>✈️ ছুটি / Leave</h3>
+    <label style="text-align:left">ছুটির কারণ</label><input id="leaveReason" placeholder="যেমন: অসুস্থতা / ব্যক্তিগত"/>
+    <label style="text-align:left">আমার ডিউটি কে করবে? (Replace)</label>
+    <select id="replaceWith"><option value="">-- কেউ নেই --</option></select>
+    <div class="row" style="margin-top:14px"><button class="big-btn green" id="btnConfirmLeave" style="margin:0">কনফার্ম</button><button class="big-btn red" id="btnCancelLeave" style="margin:0">বাতিল</button></div>
+  </div>
+</div>
+
+<div id="adminModal" class="hide">
+  <div class="card" style="max-width:400px;text-align:center">
+    <h3>🔴 অ্যাডমিন প্যানেল</h3>
+    <label style="text-align:left">অপারেটর সিলেক্ট করুন</label><select id="absentOperator"><option value="">-- সিলেক্ট --</option></select>
+    <label style="text-align:left">কারণ</label><input id="absentReason" placeholder="যেমন: না এসে অনুপস্থিত"/>
+    <div class="row" style="margin-top:14px"><button class="big-btn red" id="btnMarkAbsent" style="margin:0">অনুপস্থিত মার্ক</button><button class="big-btn gray" id="btnCloseAdmin" style="margin:0">বন্ধ</button></div>
+  </div>
+</div>
+
+<div id="rosterModal" class="hide">
+  <div class="card" style="max-width:95%;width:95%;text-align:center">
+    <h3>📅 সাপ্তাহিক রোস্টার</h3>
+    <select id="rosterStation" style="margin-bottom:10px"><option value="Kamalapur">কমলাপুর স্টেশন</option><option value="Airport">বিমানবন্দর স্টেশন</option></select>
+    <div id="rosterView" style="overflow-x:auto"></div>
+    <button class="btn red" id="btnCloseRoster" style="margin-top:10px">বন্ধ করুন</button>
+  </div>
+</div>
+
+<div id="reportModal" class="hide">
+  <div class="card" style="max-width:400px;text-align:center">
+    <h3>📊 মাসিক রিপোর্ট</h3><input type="month" id="reportMonth" style="margin-bottom:10px"/>
+    <button class="btn blue" id="btnGenerateReport" style="margin-top:0">রিপোর্ট দেখান</button>
+    <div class="row" style="margin-top:12px"><button class="big-btn green" id="btnExportAttExcel" style="padding:8px;font-size:12px;margin:0">📥 হাজিরা Excel</button><button class="big-btn orange" id="btnExportTrainExcel" style="padding:8px;font-size:12px;margin:0">📥 ট্রেন Excel</button></div>
+    <div id="reportResult" style="margin-top:15px;text-align:left;max-height:35vh;overflow-y:auto"></div>
+    <button class="btn red" id="btnCloseReport" style="margin-top:10px">বন্ধ করুন</button>
+  </div>
+</div>
+
+<div id="leaveAppModal" class="hide">
+  <div class="card" style="max-width:400px;text-align:center">
+    <h3>📝 ছুটির আবেদন / Leave Application</h3>
+    <div style="text-align:left; background:rgba(40, 10, 10, 0.3); backdrop-filter: blur(10px); padding:12px; border-radius:12px; border:1px solid rgba(255, 150, 150, 0.15); margin-bottom:12px;">
+        <p style="font-size:12px; color:#fca5a5; margin-bottom:6px;">আবেদনকারীর তথ্য:</p>
+        <p style="font-size:12px; color:#fff; margin-bottom:4px;"><span style="color:#ef4444; width:70px; display:inline-block;">নাম:</span> <span id="leaveAppName">-</span></p>
+        <p style="font-size:12px; color:#fff; margin-bottom:4px;"><span style="color:#ef4444; width:70px; display:inline-block;">কর্মস্থল:</span> <span id="leaveAppStn">-</span></p>
+        <p style="font-size:12px; color:#fff; margin-bottom:4px;"><span style="color:#ef4444; width:70px; display:inline-block;">ঠিকানা:</span> <span id="leaveAppAddress">-</span></p>
+        <p style="font-size:12px; color:#fff; margin-bottom:4px;"><span style="color:#ef4444; width:70px; display:inline-block;">পদবি:</span> <span id="leaveAppDesig">-</span></p>
+        <p style="font-size:12px; color:#fff;"><span style="color:#ef4444; width:70px; display:inline-block;">মোবাইল:</span> <span id="leaveAppMobile">-</span></p>
+    </div>
+    <label style="text-align:left">From Leave Date</label><input type="date" id="leaveFromDate"/>
+    <label style="text-align:left">To Leave Date</label><input type="date" id="leaveToDate"/>
+    <label style="text-align:left">কারণ</label>
+    <select id="leaveAppReason">
+        <option value="">-- সিলেক্ট করুন --</option>
+        <option>অসুস্থ</option>
+        <option>ব্যক্তিগত কাজ</option>
+        <option>পারিবারিক সমস্যা</option>
+        <option>ঘুরতে যাবো</option>
+        <option>বাড়ি যাবো</option>
+    </select>
+    <button class="btn purple" id="btnSubmitLeaveApp" style="margin-top:10px">সাবমিট করুন</button>
+    
+    <div class="auth-section">
+        <div class="auth-box">
+            <h5>HR Department</h5>
+            <div id="hrAuthStatus" style="font-size:10px; color:#fca5a5; margin-bottom:5px;">Pending</div>
+            <button class="auth-btn auth-approve hide" id="btnHrApprove">Approve</button>
+            <button class="auth-btn auth-reject hide" id="btnHrReject">Reject</button>
+        </div>
+        <div class="auth-box">
+            <h5>Authorized</h5>
+            <div id="authStatus" style="font-size:10px; color:#fca5a5; margin-bottom:5px;">Pending</div>
+            <button class="auth-btn auth-approve hide" id="btnAuthApprove">Approve</button>
+            <button class="auth-btn auth-reject hide" id="btnAuthReject">Reject</button>
+        </div>
+    </div>
+    
+    <button class="btn red" id="btnCloseLeaveApp" style="margin-top:15px">বন্ধ করুন</button>
+  </div>
+</div>
+
+<div id="empRecordModal" class="hide">
+  <div class="card" style="max-width:95%;width:95%;text-align:center">
+    <h3>📂 সকল কর্মকর্তার তথ্য / Employee Records</h3>
+    <div id="empRecordList" style="max-height: 60vh; overflow-y: auto; text-align: left; background: rgba(20,5,5,0.3); border-radius: 12px; padding: 5px; border: 1px solid rgba(255, 150, 150, 0.15);">
+        <p style="text-align:center; color:#fca5a5; padding: 20px;">লোড হচ্ছে...</p>
+    </div>
+    <div id="empRecordDetail" class="hide" style="text-align: left; max-height: 70vh; overflow-y: auto;">
+    </div>
+    <button class="btn red" id="btnCloseEmpRecord" style="margin-top:10px">বন্ধ করুন</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, push, set, onValue, remove, update, query, limitToLast, get }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAq2hRxwXmzzTyZdNq-wVQ1hLghAaImog", authDomain: "arts-db32d.firebaseapp.com",
+  databaseURL: "https://arts-db32d-default-rtdb.firebaseio.com", projectId: "arts-db32d",
+  storageBucket: "arts-db32d.firebasestorage.app", messagingSenderId: "364667603982",
+  appId: "1:364667603982:web:a24c9db5da730d2adfc05f", measurementId: "G-C9HWD5D73D"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getDatabase(app);
+const $ = id => document.getElementById(id);
+const todayKey = () => { const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
+const timeNow = () => new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+
+const enToBn = (s) => {
+    if (s === null || s === undefined || s === '') return s;
+    return String(s).replace(/[0-9]/g, d => "০১২৩৪৫৬৭৮৯"[d]);
+};
+const bnToEn = (s) => String(s).replace(/[০-৯]/g, d => "০১২৩৪৫৬৭৮৯".indexOf(d));
+
+const getTodayDateString = () => {
+    const now = new Date();
+    const daysEn = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const monthsEn = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    return `${daysEn[now.getDay()]}, ${now.getDate()} ${monthsEn[now.getMonth()]} ${now.getFullYear()}`;
+};
+
+const TRAIN_DB = {
+  "769": { name: "ধুমকেতু এক্সপ্রেস", destination: "রাজশাহী", dep: "06:00" },
+  "816": { name: "পর্যটক এক্সপ্রেস", destination: "কক্সবাজার", dep: "06:15" },
+  "709": { name: "পারাবত এক্সপ্রেস", destination: "সিলেট", dep: "06:30" },
+  "765": { name: "নীলসাগর এক্সপ্রেস", destination: "চিলাহাটী", dep: "06:45" },
+  "788": { name: "সোনার বাংলা এক্সপ্রেস", destination: "চট্টগ্রাম", dep: "07:00" },
+  "737": { name: "এগার সিন্দুর প্রভাতী", destination: "কিশোরগঞ্জ", dep: "07:15" },
+  "707": { name: "তিস্তা এক্সপ্রেস", destination: "দেওয়ানগঞ্জ বাজার", dep: "07:30" },
+  "704": { name: "মহানগর প্রভাতী", destination: "চট্টগ্রাম", dep: "07:45" },
+  "726": { name: "সুন্দরবন এক্সপ্রেস", destination: "খুলনা", dep: "08:00" },
+  "43":  { name: "মহুয়া কমিউটার", destination: "মোহনগঞ্জ", dep: "08:15" },
+  "809": { name: "বুড়িমারী এক্সপ্রেস", destination: "লালমনিরহাট", dep: "08:30" },
+  "4":   { name: "কর্ণফূলী কমিউটার", destination: "চট্টগ্রাম", dep: "08:45" },
+  "771": { name: "রংপুর এক্সপ্রেস", destination: "রংপুর", dep: "09:10" },
+  "6":   { name: "নারায়ণগঞ্জ কমিউটার", destination: "নারায়ণগঞ্জ", dep: "09:15" },
+  "3":   { name: "তিস্তা ঈদ স্পেশাল", destination: "দেওয়ানগঞ্জ", dep: "09:30" },
+  "34":  { name: "তিতাস কমিউটার", destination: "ব্রাহ্মণবাড়িয়া", dep: "09:45" },
+  "799": { name: "জামালপুর এক্সপ্রেস", destination: "জামালপুর", dep: "10:00" },
+  "705": { name: "একতা এক্সপ্রেস", destination: "পঞ্চগড়", dep: "10:15" },
+  "781": { name: "কিশোরগঞ্জ এক্সপ্রেস", destination: "কিশোরগঞ্জ", dep: "10:30" },
+  "828": { name: "রুপসী বাংলা এক্সপ্রেস", destination: "বেনাপোল", dep: "10:45" },
+  "JC3": { name: "জয়দেবপুর কমিউটার", destination: "জয়দেবপুর", dep: "11:00" },
+  "717": { name: "জয়ন্তীকা এক্সপ্রেস", destination: "সিলেট", dep: "11:15" },
+  "26":  { name: "নকশিকাঁথা এক্সপ্রেস", destination: "খুলনা", dep: "11:20" },
+  "735": { name: "অগ্নিবীণা এক্সপ্রেস", destination: "তারাকান্দি", dep: "11:30" },
+  "5":   { name: "রাজশাহী কমিউটার", destination: "চাঁপাইনবাবগঞ্জ", dep: "12:15" },
+  "8":   { name: "নারায়ণগঞ্জ কমিউটার", destination: "নারায়ণগঞ্জ", dep: "12:25" },
+  "789": { name: "মোহনগঞ্জ এক্সপ্রেস", destination: "মোহনগঞ্জ", dep: "13:15" },
+  "791": { name: "বনলতা এক্সপ্রেস", destination: "চাঁপাইনবাবগঞ্জ", dep: "13:30" },
+  "802": { name: "চট্টলা এক্সপ্রেস", destination: "চট্টগ্রাম", dep: "14:15" },
+  "753": { name: "সিল্ক সিটি এক্সপ্রেস", destination: "রাজশাহী", dep: "14:30" },
+  "10":  { name: "নারায়ণগঞ্জ কমিউটার", destination: "নারায়ণগঞ্জ", dep: "14:45" },
+  "773": { name: "কালনী এক্সপ্রেস", destination: "সিলেট", dep: "14:55" },
+  "755": { name: "মধুমতি এক্সপ্রেস", destination: "রাজশাহী", dep: "15:00" },
+  "712": { name: "উপকূল এক্সপ্রেস", destination: "নোয়াখালী", dep: "15:10" },
+  "136": { name: "অভিযাত্রী কমিউটার", destination: "গোপালগঞ্জ", dep: "15:30" },
+  "51":  { name: "জামালপুর কমিউটার", destination: "দেওয়ানগঞ্জ", dep: "15:40" },
+  "776": { name: "সিরাজগঞ্জ এক্সপ্রেস", destination: "সিরাজগঞ্জ", dep: "16:15" },
+  "702": { name: "সুবর্ণ এক্সপ্রেস", destination: "চট্টগ্রাম", dep: "16:30" },
+  "745": { name: "যমুনা এক্সপ্রেস", destination: "তারাকান্দি", dep: "16:45" },
+  "805": { name: "চিলাহাটি এক্সপ্রেস", destination: "চিলাহাটি", dep: "17:00" },
+  "T3":  { name: "তুরাগ কমিউটার", destination: "জয়দেবপুর", dep: "17:20" },
+  "36":  { name: "তিতাস কমিউটার", destination: "আখাউড়া", dep: "17:45" },
+  "743": { name: "ব্রহ্মপুত্র এক্সপ্রেস", destination: "দেওয়ানগঞ্জ", dep: "18:15" },
+  "NC":  { name: "নরসিংদী কমিউটার", destination: "ভৈরব", dep: "18:30" },
+  "749": { name: "এগারো সিন্দুর গোধূলী", destination: "কিশোরগঞ্জ", dep: "18:45" },
+  "12":  { name: "নোয়াখালী এক্সপ্রেস", destination: "নোয়াখালী", dep: "19:10" },
+  "764": { name: "চিত্রা এক্সপ্রেস", destination: "খুলনা", dep: "19:30" },
+  "14":  { name: "নারায়ণগঞ্জ কমিউটার", destination: "নারায়ণগঞ্জ", dep: "19:35" },
+  "826": { name: "জাহানাবাদ এক্সপ্রেস", destination: "খুলনা", dep: "20:00" },
+  "797": { name: "কুড়িগ্রাম এক্সপ্রেস", destination: "কুড়িগ্রাম", dep: "20:00" },
+  "55":  { name: "ভাওয়াল এক্সপ্রেস", destination: "দেওয়ানগঞ্জ", dep: "20:15" },
+  "757": { name: "দ্রুতযান এক্সপ্রেস", destination: "পঞ্চগড়", dep: "20:45" },
+  "722": { name: "মহানগর এক্সপ্রেস", destination: "চট্টগ্রাম", dep: "21:20" },
+  "751": { name: "লালমনি এক্সপ্রেস", destination: "লালমনিরহাট", dep: "21:45" },
+  "16":  { name: "নারায়ণগঞ্জ কমিউটার", destination: "নারায়ণগঞ্জ", dep: "21:55" },
+  "739": { name: "উপবন এক্সপ্রেস", destination: "সিলেট", dep: "22:00" },
+  "777": { name: "হাওর এক্সপ্রেস", destination: "মোহনগঞ্জ", dep: "22:15" },
+  "759": { name: "পদ্মা এক্সপ্রেস", destination: "রাজশাহী", dep: "22:45" },
+  "814": { name: "কক্সবাজার এক্সপ্রেস", destination: "কক্সবাজার", dep: "23:00" },
+  "742": { name: "তূর্ণা এক্সপ্রেস", destination: "চট্টগ্রাম", dep: "23:15" },
+  "793": { name: "পঞ্চগড় এক্সপ্রেস", destination: "পঞ্চগড়", dep: "23:30" },
+  "796": { name: "বেনাপোল এক্সপ্রেস", destination: "বেনাপোল", dep: "23:30" },
+  "02":  { name: "চট্টগ্রাম মেইল", destination: "চট্টগ্রাম", dep: "23:45" }
+};
+
+const ADMIN_PHONES = ["01794960008"]; 
+let isAdmin = false;
+
+let me = JSON.parse(localStorage.getItem('arts_user') || 'null');
+let videoStream = null;
+
+let lastChatTime = parseInt(localStorage.getItem('arts_lastChat') || '0');
+let currentChatArray = [];
+
+const ROSTER_CONFIG = {
+  "Kamalapur": ["সকাল ৭টা - দুপুর ২টা", "দুপুর ২টা - রাত ১০টা", "রাত ১০টা - সকাল ৭টা"],
+  "Airport": ["সকাল ৬টা - দুপুর ১টা", "সকাল ৬টা - বিকাল ৩টা", "বিকাল ৩টা - রাত ১টা", "দুপুর ১টা - সন্ধ্যা ৭টা", "সন্ধ্যা ৭টা - রাত ১ টা"]
+};
+
+$('btnLogin').onclick = async () => {
+  const opId = $('inOpId').value.trim(); const name = $('inName').value.trim();
+  const stn = $('inStn').value.trim(); const desig= $('inDesig').value.trim() || 'Computer Operator';
+  const address = $('inAddress').value.trim() || 'উল্লেখ নেই';
+  const pin = $('inPin').value.trim();
+  if(!opId) { $('loginMsg').textContent='অপারেটর আইডি (মোবাইল নম্বর) দাও'; return; }
+  if(name.length<3){ $('loginMsg').textContent='নাম কমপক্ষে ৩ অক্ষরের দিতে হবে'; return; }
+  if(!stn){ $('loginMsg').textContent='স্টেশনের নাম দাও'; return; }
+  if(pin.length!==4){ $('loginMsg').textContent='PIN ৪ ডিজিটের হতে হবে'; return; }
+  $('loginMsg').textContent = 'অপেক্ষা করুন...';
+  try {
+    const userSnap = await get(ref(db, 'operators/' + opId));
+    if (userSnap.exists()) {
+      const userData = userSnap.val();
+      if (userData.pin === pin) { me = userData; me.id = opId; localStorage.setItem('arts_user', JSON.stringify(me)); startApp(); }
+      else { $('loginMsg').textContent = 'ভুল PIN! আবার চেষ্টা করো।'; }
+    } else {
+      const appSnap = await get(ref(db, 'approved_operators/' + opId));
+      if (appSnap.exists()) {
+        me = { id: opId, name, stn, desig, address, pin };
+        localStorage.setItem('arts_user', JSON.stringify(me));
+        await set(ref(db,'operators/'+opId), { name, stn, desig, address, pin, lastSeen: Date.now() });
+        startApp();
+      } else { $('loginMsg').textContent = '❌ আপনি অনুমোদিত নন। অ্যাডমিনের সাথে যোগাযোগ করুন।'; }
+    }
+  } catch (e) { $('loginMsg').textContent = 'ইন্টারনেট সমস্যা! আবার চেষ্টা করো।'; }
+};
+
+function startApp(){
+  $('login').classList.add('hide'); $('app').classList.remove('hide');
+  $('hName').textContent = me.name; $('hStn').textContent = me.stn;
+  $('pName').textContent = me.name; $('pDesig').textContent = me.desig; $('pStn').textContent = me.stn;
+  
+  document.getElementById('headerDate').textContent = getTodayDateString();
+  document.getElementById('tInCharge').value = me.name;
+  
+  isAdmin = ADMIN_PHONES.includes(me.id);
+  if(isAdmin) $('btnAdmin').classList.remove('hide');
+  loadAttendance(); loadTrains(); loadChat(); loadCompanyInfo();
+  setupTrainAutofill();
+}
+
+function setupTrainAutofill(){
+  const tNoInput = $('tNo');
+  tNoInput.addEventListener('input', () => {
+    const raw = tNoInput.value.trim();
+    if (!raw) return;
+    const enNum = bnToEn(raw).toUpperCase();
+    
+    let match = TRAIN_DB[enNum];
+    if (!match) {
+      const digitsOnly = enNum.replace(/^0+/, '') || enNum;
+      match = TRAIN_DB[digitsOnly];
+    }
+    if (!match && /^\d+$/.test(enNum)) {
+      const padded = enNum.padStart(3, '0');
+      match = TRAIN_DB[padded];
+    }
+    
+    if (match) {
+      $('tName').value = match.name;
+      $('tDestination').value = match.destination;
+      $('tDep').value = match.dep;
+      
+      $('tName').style.borderColor = '#ef4444';
+      $('tDestination').style.borderColor = '#ef4444';
+      $('tDep').style.borderColor = '#ef4444';
+      setTimeout(() => {
+        $('tName').style.borderColor = 'rgba(255, 150, 150, 0.15)';
+        $('tDestination').style.borderColor = 'rgba(255, 150, 150, 0.15)';
+        $('tDep').style.borderColor = 'rgba(255, 150, 150, 0.15)';
+      }, 800);
+    }
+  });
+}
+
+document.querySelectorAll('nav button').forEach(b=>{
+  b.onclick = ()=>{ 
+    document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active'); 
+    $('tab-'+b.dataset.tab).classList.add('active'); 
+
+    if (b.dataset.tab === 'chat') {
+        b.classList.remove('chat-notification');
+        if (currentChatArray.length > 0) {
+            lastChatTime = currentChatArray[currentChatArray.length - 1].at;
+            localStorage.setItem('arts_lastChat', lastChatTime);
+        }
+    }
+  };
+});
+
+function loadAttendance(){
+  const key = todayKey();
+  onValue(ref(db, 'attendance/'+key+'/'+me.id), async snap=>{
+    const d = snap.val(); const box = $('myAtt');
+    box.classList.remove('empty'); 
+
+    let photoUrl = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+    if (d && d.photo) {
+        photoUrl = d.photo;
+    } else {
+        try {
+            const allAttsSnap = await get(ref(db, 'attendance'));
+            const allAtts = allAttsSnap.val() || {};
+            const dates = Object.keys(allAtts).sort().reverse();
+            for (let dt of dates) {
+                if (allAtts[dt][me.id] && allAtts[dt][me.id].photo) {
+                    photoUrl = allAtts[dt][me.id].photo;
+                    break;
+                }
+            }
+        } catch(e) { console.log("Error fetching last photo"); }
+    }
+    
+    let statusHtml = '';
+    if(!d){ 
+        statusHtml = '<span class="pill wait">এখনো হাজিরা দাওনি</span>'; 
+        $('btnIn').disabled = false; $('btnOut').disabled = true; $('btnRest').disabled = false; $('btnLeave').disabled = false;
+        $('btnRest').classList.remove('disabled-btn'); $('btnLeave').classList.remove('disabled-btn');
+    } else if(d.status === 'rest') {
+        statusHtml = '<span class="pill wait">🏖️ রেস্ট / অফ-ডে</span>';
+        $('btnIn').disabled = true; $('btnOut').disabled = true; $('btnRest').disabled = true; $('btnLeave').disabled = true;
+        $('btnRest').classList.add('disabled-btn'); $('btnLeave').classList.add('disabled-btn');
+    } else if(d.status === 'leave') {
+        statusHtml = `<span class="pill leave">✈️ ছুটি (Leave)</span><br><span style="font-size:11px;color:#fca5a5">কারণ: ${d.reason||'-'} | রিপ্লেস: ${d.replacedBy||'কেউ নেই'}</span>`;
+        $('btnIn').disabled = true; $('btnOut').disabled = true; $('btnRest').disabled = true; $('btnLeave').disabled = true;
+        $('btnRest').classList.add('disabled-btn'); $('btnLeave').classList.add('disabled-btn');
+    } else if(d.status === 'absent') {
+        statusHtml = `<span class="pill absent">🔴 অনুপস্থিত (Absent)</span><br><span style="font-size:11px;color:#fca5a5">কারণ: ${d.reason||'-'}</span>`;
+        $('btnIn').disabled = true; $('btnOut').disabled = true; $('btnRest').disabled = true; $('btnLeave').disabled = true;
+        $('btnRest').classList.add('disabled-btn'); $('btnLeave').classList.add('disabled-btn');
+    } else {
+        statusHtml = `<span class="pill on">IN: ${d.in||'--:--'}</span> <span class="pill off">OUT: ${d.out||'চলমান'}</span>`;
+        if(d.isReplacement) statusHtml += ` <span class="pill replace">🔵 রিপ্লেসমেন্ট</span>`;
+        
+        if (d.out) {
+            $('btnRest').disabled = false; $('btnLeave').disabled = false;
+            $('btnRest').classList.remove('disabled-btn'); $('btnLeave').classList.remove('disabled-btn');
+        } else {
+            $('btnRest').disabled = true; $('btnLeave').disabled = true;
+            $('btnRest').classList.add('disabled-btn'); $('btnLeave').classList.add('disabled-btn');
+        }
+        
+        $('btnIn').disabled = !!d.in; $('btnOut').disabled = !d.in || !!d.out; 
+    }
+
+    if (d) {
+       if (d.status === 'rest' || d.status === 'leave') {
+          statusHtml += `<br><button class="btn red" id="btnCancelRest" style="margin-top:8px;padding:6px 10px;font-size:10px;width:auto;display:inline-block; border-radius: 8px;">❌ বাতিল করুন</button>`;
+       }
+    }
+
+    box.innerHTML = `
+      <div class="my-profile-box">
+        <div class="my-profile-left">
+            <img src="${photoUrl}" class="my-profile-photo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'">
+            <div class="my-profile-info">
+              <h4>${me.name}</h4>
+              <p><span>পদবি:</span> ${me.desig || 'Computer Operator'}</p>
+              <p><span>কর্মস্থল:</span> ${me.stn}</p>
+              <p><span>ঠিকানা:</span> ${me.address || 'উল্লেখ নেই'}</p>
+              <p><span>মোবাইল:</span> ${me.id}</p>
+              <div style="margin-top:6px">${statusHtml}</div>
+            </div>
+        </div>
+        
+        <div class="weather-clock-widget">
+           <div class="wc-left">
+              <div class="wc-time" id="liveClockTime">04:02 <span class="ampm">AM</span></div>
+              <div class="wc-date" id="liveClockDate">Jun 25, 2013 - Tue</div>
+              <div class="wc-details">Humidity: 36%</div>
+           </div>
+           <div class="wc-right">
+              <div class="wc-icon-temp">
+                 <span class="wc-icon">🌧️</span>
+                 <span class="wc-temp">22°C</span>
+              </div>
+              <div class="wc-condition">Showers</div>
+              <div class="wc-details">Wind: 10 km/h</div>
+           </div>
+        </div>
+      </div>
+    `;
+
+    if (d && (d.status === 'rest' || d.status === 'leave')) {
+       $('btnCancelRest').onclick = () => remove(ref(db,'attendance/'+key+'/'+me.id));
+    }
+  });
+
+  setInterval(() => {
+      const clockTimeEl = document.getElementById('liveClockTime');
+      const clockDateEl = document.getElementById('liveClockDate');
+      
+      if (clockTimeEl && clockDateEl) {
+          const now = new Date();
+          let hours = now.getHours();
+          const minutes = String(now.getMinutes()).padStart(2, '0');
+          const seconds = String(now.getSeconds()).padStart(2, '0');
+          const ampm = hours >= 12 ? 'PM' : 'AM';
+          hours = hours % 12;
+          hours = hours ? hours : 12;
+          const displayHours = String(hours).padStart(2, '0');
+          
+          clockTimeEl.innerHTML = `${displayHours}:${minutes}:${seconds} <span class="ampm">${ampm}</span>`;
+          
+          const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+          const dateString = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()} - ${days[now.getDay()]}`;
+          clockDateEl.textContent = dateString;
+      }
+  }, 1000);
+
+  const updateBoard = async () => {
+     const opsSnap = await get(ref(db, 'operators')); 
+     const attSnap = await get(ref(db, 'attendance')); 
+     const ops = opsSnap.val() || {}; 
+     const allAtts = attSnap.val() || {}; 
+     const atts = allAtts[key] || {}; 
+     const list = $('attList');
+     const allIds = Object.keys(ops);
+     if(allIds.length === 0) { list.innerHTML = '<div class="empty">কোনো অপারেটর নেই</div>'; return; }
+
+     const getLastPhoto = (opId) => {
+         if (!allAtts) return null;
+         const dates = Object.keys(allAtts).sort().reverse();
+         for (let d of dates) {
+             if (allAtts[d][opId] && allAtts[d][opId].photo) {
+                 return allAtts[d][opId].photo;
+             }
+         }
+         return null;
+     };
+     
+     let operatorsData = allIds.map(id => {
+         return { id: id, op: ops[id], att: atts[id] || null };
+     });
+
+     operatorsData.sort((a, b) => {
+         const getPriority = (item) => {
+             if (!item.att) return 3; 
+             if (item.att.status === 'working') {
+                 if (item.att.out) return 2; 
+                 return 1; 
+             }
+             return 3; 
+         };
+         const pA = getPriority(a), pB = getPriority(b);
+         if (pA !== pB) return pA - pB;
+         return a.op.name.localeCompare(b.op.name);
+     });
+
+     let html = ''; let activeCount = 0;
+     
+     operatorsData.forEach(item => {
+        const id = item.id; const op = item.op; const att = item.att;
+        
+        const lastPhoto = getLastPhoto(id);
+        const photoSrc = (att && att.photo) ? att.photo : (op.photo ? op.photo : (lastPhoto ? lastPhoto : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'));
+        let photoHtml = `<div class="op-photo-wrap"><img src="${photoSrc}" class="op-photo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'">`;
+        
+        let statusText = 'NOT MARKED'; let statusColor = '#fca5a5'; let cardBorder = 'rgba(255, 150, 150, 0.15)';
+        let inTime = '--:--'; let outTime = '--:--';
+        let indicatorClass = '';
+        let overlayIcon = '';
+        let replaceText = '';
+
+        if (att) {
+           inTime = att.in || '--:--';
+           outTime = att.out || '--:--';
+           if (att.status === 'rest') { 
+               statusText = '🏖️ REST DAY'; statusColor = '#fca5a5'; cardBorder = 'rgba(220,38,38,0.5)'; 
+           } else if (att.status === 'leave') { 
+               statusText = '✈️ ON LEAVE'; statusColor = '#fca5a5'; cardBorder = 'rgba(220,38,38,0.5)'; 
+               replaceText = att.replacedBy ? `<div class="op-replace-text">In Place Of: <span class="replace-name">${att.replacedBy}</span></div>` : ''; 
+               overlayIcon = `<div class="checkout-cross-icon">✖</div>`;
+           } else if (att.status === 'absent') { 
+               statusText = '🔴 ABSENT'; statusColor = '#ff0000'; cardBorder = 'rgba(255,0,0,0.5)';
+               indicatorClass = 'indicator-absent';
+               overlayIcon = `<div class="absent-cross">✖</div>`;
+               replaceText = att.reason ? `<div style="font-size:10px;color:#fca5a5;font-weight:bold;margin-top:1px;">কারণ: ${att.reason}</div>` : '';
+           } else { 
+               if (att.out) {
+                   statusText = '🟡 CHECKED OUT'; statusColor = '#dc2626'; cardBorder = 'rgba(220,38,38,0.5)';
+                   indicatorClass = 'indicator-out';
+                   overlayIcon = `<div class="checkout-cross-icon">✖</div>`;
+               } else {
+                   activeCount++; statusText = '🟢 ACTIVE (IN)'; statusColor = '#22c55e'; cardBorder = 'rgba(34,197,94,0.5)';
+                   indicatorClass = 'indicator-active';
+                   overlayIcon = `<div class="active-check-icon">✔</div>`;
+               }
+           }
+        } else {
+           statusText = '❌ NOT MARKED'; statusColor = '#fca5a5'; cardBorder = 'rgba(255, 150, 150, 0.15)';
+        }
+        
+        photoHtml += `${overlayIcon}<div class="status-indicator ${indicatorClass}"></div></div>`;
+
+        const cardDate = getTodayDateString();
+
+        let locationIconHtml = '';
+        if (att && att.lat && att.lng) {
+            const mapLink = `https://maps.google.com/?q=${att.lat},${att.lng}`;
+            const mapIconUrl = 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjfJNcobUVK2DwxTphYpSa-KmTSGSHbQ1p7mCA8lLYVse2V206BQ1Doi5hCD4RrjY_zPkeIQ_uXfYS1RP-0u8l_Xt6MJrrOfN4rNeoRmC_XbodIMgjY_4ABCQWHbw58hqSF9JuUnoY6KCwCTuhN7DAtFqR5Af-THbMmmxkxINEmE1FfgetjS6gc7FmB4jO0/s320/360_F_2186855331_yg36PQOEsARMKKEGr0oRb4RqzubgGiMe.jpg'; 
+            locationIconHtml = `<a href="${mapLink}" target="_blank" class="op-location-btn" title="View Live Location"><img src="${mapIconUrl}" alt="Live Location"></a>`;
+        } else if (att) {
+            locationIconHtml = `<span class="op-location-missing">📍 No GPS</span>`;
+        }
+
+        html += `
+        <div class="op-card" style="border-left: 4px solid ${cardBorder}">
+           <div class="top-call-wrapper">
+              <a href="tel:${id}" class="top-call-btn"><span>📞</span></a>
+              <div class="call-now-text">Call Now</div>
+           </div>
+           <div class="op-header">
+              ${photoHtml}
+              <div class="op-info">
+                 <div class="op-name">
+                     <div class="op-name-text">${op.name} <span class="card-date">(${cardDate})</span></div>
+                     ${locationIconHtml}
+                 </div>
+                 <div class="op-station">${op.stn} <span class="gps-icon">📍</span></div>
+                 <div class="op-status-text" style="color:${statusColor}">${statusText}</div>
+                 ${replaceText}
+              </div>
+           </div>
+           <div class="op-actions">
+              <button class="op-btn btn-in" data-action="in" data-id="${id}">Office In <small>${inTime}</small></button>
+              <button class="op-btn btn-out" data-action="out" data-id="${id}">Office Out <small>${outTime}</small></button>
+              <button class="op-btn btn-replace" data-action="replace" data-id="${id}">In Place Of</button>
+           </div>
+        </div>`;
+     });
+     $('pCount').textContent = activeCount; list.innerHTML = html;
+
+     list.querySelectorAll('[data-action]').forEach(btn => {
+        btn.onclick = async () => {
+           const action = btn.dataset.action;
+           const opId = btn.dataset.id;
+           if (!isAdmin) { alert("❌ শুধু অ্যাডমিন এই কাজটি করতে পারবেন।"); return; }
+           
+           if (action === 'in' || action === 'out') {
+              if(confirm(`আপনি কি নিশ্চিত?`)) {
+                 if(action === 'in') {
+                    update(ref(db, 'attendance/'+key+'/'+opId), { in: timeNow(), status: 'working' });
+                 } else {
+                    update(ref(db, 'attendance/'+key+'/'+opId), { out: timeNow() });
+                 }
+              }
+           } else if (action === 'replace') {
+              const name = prompt("কার নাম দিয়ে রিপ্লেস করবেন?");
+              if(name) {
+                 update(ref(db, 'attendance/'+key+'/'+opId), { replacedBy: name, status: 'leave' });
+              }
+           }
+        };
+     });
+  };
+  onValue(ref(db, 'operators'), updateBoard); onValue(ref(db, 'attendance/' + key), updateBoard);
+}
+
+$('btnAddTrain').onclick = ()=>{ 
+  const no=$('tNo').value.trim(), name=$('tName').value.trim(); 
+  if(!no || !name){ alert('ট্রেন নং ও ট্রেনের নাম দাও'); return; } 
+  push(ref(db,'trains'), { 
+    no, name, 
+    platform: $('tPlatform').value.trim() || 'N/A',
+    destination: $('tDestination').value.trim() || 'N/A',
+    dep: $('tDep').value.trim(), 
+    depExp: $('tDepExp').value.trim(), 
+    depDelay: $('tDepDelay').value.trim(), 
+    weeklyOff: $('tWeeklyOff').value, 
+    inCharge: $('tInCharge').value.trim() || me.name, 
+    station: $('tStation').value || 'N/A',
+    departed: false,
+    by: me.name, at: Date.now() 
+  }); 
+  ['tNo','tName','tPlatform','tDestination','tDep','tDepExp','tDepDelay'].forEach(i=>$(i).value=''); 
+  $('tInCharge').value = me.name;
+  $('tWeeklyOff').value = ''; $('tStation').value = '';
+  alert("✅ ট্রেন সফলভাবে যোগ হয়েছে!");
+};
+
+function getTrainRowClass(train) {
+    if (train.departed) return 'row-departed';
+    if (!train.dep) return '';
+    try {
+        const depStr = train.dep.trim();
+        const match = depStr.match(/(\d{1,2}):(\d{2})/);
+        if (!match) return '';
+        const now = new Date();
+        const depTime = new Date();
+        depTime.setHours(parseInt(match[1]), parseInt(match[2]), 0, 0);
+        const diffMin = (depTime - now) / 60000;
+        if (diffMin < 0) return 'row-alert';
+        if (diffMin <= 5) return 'row-warning';
+        return '';
+    } catch(e) { return ''; }
+}
+
+function loadTrains(){ 
+  onValue(ref(db,'trains'), snap=>{ 
+    const list = $('trainList'); 
+    const d = snap.val()||{}; 
+    
+    const arr = Object.entries(d).sort((a,b)=>{
+        if (a[1].departed && !b[1].departed) return 1;
+        if (!a[1].departed && b[1].departed) return -1;
+        return b[1].at - a[1].at;
+    });
+    
+    if(!arr.length){ 
+      list.innerHTML='<div class="train-empty">কোনো ট্রেন নেই</div>'; 
+      list.className = 'train-empty';
+      return; 
+    } 
+    
+    list.className = '';
+    list.innerHTML = `
+      <table class="train-table">
+        <thead>
+          <tr>
+            <th>ট্রেন নং</th>
+            <th style="text-align:left;padding-left:3px;">ট্রেনের নাম</th>
+            <th>প্ল্যাটফর্ম নং</th>
+            <th>গন্তব্য</th>
+            <th>স্টেশনে আছে</th>
+            <th>একশন</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${arr.map(([id,t], index)=>{
+            const rowClass = getTrainRowClass(t);
+            const yellowTextClass = (index % 2 === 0) ? 'row-yellow-text' : '';
+            
+            const trainNoHtml = t.departed 
+                ? `<div class="train-no-wrap"><span class="departed-cross-mark">✖</span><span class="departed-train-no-below">${enToBn(t.no)}</span></div>` 
+                : `<span class="train-no-badge">${enToBn(t.no)}</span>`;
+            const depDelayHtml = (t.departed && t.depDelay) 
+                ? `<span class="departed-time-big">${enToBn(t.depDelay)}</span>` 
+                : (t.depDelay ? `<span class="time-value">${enToBn(t.depDelay)}</span>` : '<span class="time-value">--</span>');
+            const departedText = t.departed ? '<span class="departed-text-below">✖ ছেড়ে গেছে</span>' : '';
+            return `
+            <tr class="train-main-row ${rowClass} ${yellowTextClass}" data-train-id="${id}">
+              <td class="train-no">${trainNoHtml}</td>
+              <td class="train-name"><span class="train-name-badge">${t.name}</span>${departedText}</td>
+              <td><span class="platform-badge">${enToBn(t.platform) || 'N/A'}</span></td>
+              <td><span class="dest-badge">${t.destination || 'N/A'}</span></td>
+              <td><span class="station-badge">${t.station||'N/A'}</span></td>
+              <td>
+                ${!t.departed ? `<button class="departed-btn" data-depart="${id}">✔ ছাড়বে</button>` : ''}
+                <button class="del-btn" data-del="${id}">🗑️</button>
+              </td>
+            </tr>
+            <tr class="train-detail-row ${rowClass} ${yellowTextClass}">
+              <td colspan="6">
+                <div class="detail-item"><span>ছাড়ার সময়:</span> <span class="time-value">${t.dep ? enToBn(t.dep) : '--'}</span></div>
+                <div class="detail-item"><span>সম্ভাব্য:</span> <span class="time-value">${t.depExp ? enToBn(t.depExp) : '--'}</span></div>
+                <div class="detail-item"><span>বিলম্বিত:</span> ${depDelayHtml}</div>
+                <div class="detail-item"><span>দায়িত্বে:</span> <span class="time-value">${t.inCharge||'--'}</span></div>
+                <div class="detail-item"><span>সাপ্তাহিক বন্ধ:</span> <span class="time-value">${t.weeklyOff||'নেই'}</span></div>
+              </td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    `;
+    
+    list.querySelectorAll('[data-del]').forEach(b=>{ 
+      b.onclick = ()=> { if(confirm("ট্রেনটি মুছে ফেলতে চান?")) remove(ref(db,'trains/'+b.dataset.del)); }; 
+    });
+    
+    list.querySelectorAll('[data-depart]').forEach(b=>{ 
+      b.onclick = ()=> { 
+        if(confirm("ট্রেনটি কি ছেড়ে গেছে?\n\n✅ বর্তমান সময় স্বয়ংক্রিয়ভাবে 'বিলম্বিত সময়' ঘরে বসে যাবে।")) {
+            const currentTime = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+            update(ref(db,'trains/'+b.dataset.depart), { 
+                departed: true, 
+                departedAt: Date.now(),
+                depDelay: currentTime
+            });
+        }
+      }; 
+    });
+  }); 
+}
+
+setInterval(() => {
+    document.querySelectorAll('.train-main-row[data-train-id]').forEach(row => {
+        const id = row.dataset.trainId;
+        get(ref(db, 'trains/'+id)).then(snap => {
+            const t = snap.val();
+            if (!t || t.departed) return;
+            const newClass = getTrainRowClass(t);
+            row.classList.remove('row-warning', 'row-alert');
+            if (newClass) row.classList.add(newClass);
+            const detailRow = row.nextElementSibling;
+            if (detailRow) {
+                detailRow.classList.remove('row-warning', 'row-alert');
+                if (newClass) detailRow.classList.add(newClass);
+            }
+        });
+    });
+}, 30000);
+
+$('btnLeave').onclick = async () => {
+  try {
+    const opsSnap = await get(ref(db, 'operators')); 
+    const ops = opsSnap.val() || {};
+    const sel = $('replaceWith'); sel.innerHTML = '<option value="">-- কেউ নেই --</option>';
+    Object.keys(ops).forEach(id => { if(id !== me.id) sel.innerHTML += `<option value="${ops[id].name}">${ops[id].name} (${ops[id].stn})</option>`; });
+    $('leaveReason').value = ''; 
+    $('leaveModal').classList.remove('hide');
+  } catch(e) {
+    console.log("Error loading operators for replace:", e);
+    alert("ডেটা লোড করতে সমস্যা হচ্ছে, আবার চেষ্টা করুন।");
+  }
+};
+$('btnCancelLeave').onclick = () => $('leaveModal').classList.add('hide');
+$('btnConfirmLeave').onclick = async () => {
+  const reason = $('leaveReason').value.trim() || 'ব্যক্তিগত';
+  const replacedBy = $('replaceWith').value;
+  const key = todayKey();
+  await set(ref(db,'attendance/'+key+'/'+me.id), {
+    phone: me.id, name: me.name, stn: me.stn, desig: me.desig, date: key,
+    status: 'leave', reason, replacedBy, leaveTime: timeNow()
+  });
+  if(replacedBy) {
+    const opsSnap = await get(ref(db, 'operators')); const ops = opsSnap.val() || {};
+    const repId = Object.keys(ops).find(id => ops[id].name === replacedBy);
+    if(repId) { await update(ref(db,'attendance/'+key+'/'+repId), { isReplacement: true, replacementFor: me.name }); }
+  }
+  $('leaveModal').classList.add('hide'); alert("✈️ আপনার ছুটি সফলভাবে রেকর্ড করা হয়েছে।");
+};
+
+$('btnAdmin').onclick = async () => {
+  const opsSnap = await get(ref(db, 'operators')); const ops = opsSnap.val() || {};
+  const sel = $('absentOperator'); sel.innerHTML = '<option value="">-- সিলেক্ট --</option>';
+  Object.keys(ops).forEach(id => { sel.innerHTML += `<option value="${id}">${ops[id].name} (${ops[id].stn})</option>`; });
+  $('absentReason').value = ''; $('adminModal').classList.remove('hide');
+};
+$('btnCloseAdmin').onclick = () => $('adminModal').classList.add('hide');
+$('btnMarkAbsent').onclick = async () => {
+  const opId = $('absentOperator').value; const reason = $('absentReason').value.trim() || 'ডিউটিতে আসেনি';
+  if(!opId) { alert("অপারেটর সিলেক্ট করুন"); return; }
+  const opsSnap = await get(ref(db, 'operators/'+opId)); const op = opsSnap.val();
+  const key = todayKey();
+  await set(ref(db,'attendance/'+key+'/'+opId), {
+    phone: opId, name: op.name, stn: op.stn, desig: op.desig, date: key,
+    status: 'absent', reason, markedBy: me.name, markedAt: Date.now()
+  });
+  $('adminModal').classList.add('hide'); alert("🔴 " + op.name + " কে অনুপস্থিত মার্ক করা হয়েছে।");
+};
+
+$('btnRoster').onclick = () => { 
+    $('rosterStation').value = 'Kamalapur'; 
+    $('rosterModal').classList.remove('hide'); 
+    loadRoster('Kamalapur'); 
+};
+$('btnCloseRoster').onclick = () => $('rosterModal').classList.add('hide');
+$('rosterStation').onchange = () => loadRoster($('rosterStation').value);
+
+async function loadRoster(station) {
+  const view = $('rosterView'); view.innerHTML = '<p style="text-align:center;color:#fca5a5">লোড হচ্ছে...</p>';
+  const shifts = ROSTER_CONFIG[station] || [];
+  const today = new Date(); const days = [];
+  for(let i=0;i<7;i++){ const d = new Date(today); d.setDate(today.getDate()+i); days.push(d); }
+  const dayBn = ["রবি","সোম","মঙ্গল","বুধ","বৃহঃ","শুক্র","শনি"];
+  
+  try {
+    const rosterSnap = await get(ref(db, 'roster/'+station)); const roster = rosterSnap.val() || {};
+    const opsSnap = await get(ref(db, 'operators')); const ops = opsSnap.val() || {};
+    const stationOps = Object.keys(ops).filter(id => (ops[id].stn||'').toLowerCase().includes(station.toLowerCase().slice(0,5)));
+
+    let html = '<table class="roster-table"><thead><tr><th>শিফট</th>';
+    days.forEach(d => { html += `<th>${dayBn[d.getDay()]}<br>${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}</th>`; });
+    html += '</tr></thead><tbody>';
+    shifts.forEach((shift, idx) => {
+      html += `<tr><td style="text-align:left;color:#ef4444;font-weight:700;font-size:10px">${shift}</td>`;
+      days.forEach(d => {
+        const dk = d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+        const cell = (roster[dk]||{})[idx];
+        if(cell) { const opName = ops[cell] ? ops[cell].name : cell; html += `<td class="has-name">${opName}</td>`; }
+        else { html += `<td class="empty-cell">-</td>`; }
+      });
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+    
+    if(isAdmin) {
+      html += '<div style="margin-top:15px;padding:12px;background:rgba(40, 10, 10, 0.3); backdrop-filter: blur(10px); border:1px dashed #dc2626;border-radius:12px;text-align:left">';
+      html += '<h4 style="color:#ef4444">🔧 অ্যাডমিন রোস্টার সেট করুন</h4>';
+      html += '<label>তারিখ</label><input type="date" id="rsDate"/>';
+      html += '<label>শিফট</label><select id="rsShift">'; shifts.forEach((s,i)=> html += `<option value="${i}">${s}</option>`); html += '</select>';
+      html += '<label>অপারেটর</label><select id="rsOp"><option value="">-- খালি --</option>'; stationOps.forEach(id => html += `<option value="${id}">${ops[id].name}</option>`); html += '</select>';
+      html += '<button class="btn blue" id="btnSaveRoster" style="margin-top:10px">রোস্টার সেভ করুন</button></div>';
+    }
+    view.innerHTML = html;
+    if(isAdmin) {
+      $('btnSaveRoster').onclick = async () => {
+        const date = $('rsDate').value; const sh = $('rsShift').value; const op = $('rsOp').value;
+        if(!date) { alert("তারিখ দিন"); return; }
+        if(op) { await set(ref(db, 'roster/'+station+'/'+date+'/'+sh), op); }
+        else { await remove(ref(db, 'roster/'+station+'/'+date+'/'+sh)); }
+        alert("✅ রোস্টার সেভ হয়েছে।"); loadRoster(station);
+      };
+    }
+  } catch(e) { 
+      view.innerHTML = '<p style="color:#fca5a5;text-align:center">লোড করা যায়নি।</p>'; 
+      console.error(e);
+  }
+}
+
+$('btnReport').onclick = () => { 
+    const now = new Date(); 
+    $('reportMonth').value = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,"0"); 
+    $('reportResult').innerHTML = ''; 
+    $('reportModal').classList.remove('hide'); 
+};
+$('btnCloseReport').onclick = () => $('reportModal').classList.add('hide');
+$('btnGenerateReport').onclick = async () => {
+  const monthStr = $('reportMonth').value; if(!monthStr) { alert("মাস সিলেক্ট করুন"); return; }
+  $('reportResult').innerHTML = '<p style="text-align:center;color:#fca5a5">লোড হচ্ছে...</p>';
+  try {
+    const opsSnap = await get(ref(db, 'operators')); const attSnap = await get(ref(db, 'attendance'));
+    const ops = opsSnap.val() || {}; const atts = attSnap.val() || {};
+    const [year, month] = monthStr.split('-'); const daysInMonth = new Date(year, month, 0).getDate();
+    let reportHtml = '<div style="display:flex;flex-direction:column;gap:10px">';
+    Object.keys(ops).forEach(opId => {
+      let presentDays = 0, restDays = 0, leaveDays = 0, absentDays = 0;
+      Object.keys(atts).forEach(date => {
+        if(date.startsWith(monthStr) && atts[date][opId]) {
+           const s = atts[date][opId].status;
+           if(s === 'rest') restDays++; else if(s === 'leave') leaveDays++; else if(s === 'absent') absentDays++; else presentDays++;
+        }
+      });
+      reportHtml += `<div class="item"><div><div class="t1">${ops[opId].name}</div><div class="t2">${ops[opId].stn}</div></div><div style="text-align:right; font-size:11px; line-height:1.6"><div style="color:#ef4444">হাজিরা: ${presentDays}</div><div style="color:#fca5a5">রেস্ট: ${restDays}</div><div style="color:#dc2626">ছুটি: ${leaveDays}</div><div style="color:#ff0000">অনুপস্থিত: ${absentDays}</div></div></div>`;
+    });
+    reportHtml += '</div>'; $('reportResult').innerHTML = reportHtml;
+  } catch(e) { $('reportResult').innerHTML = '<p style="color:#fca5a5">সমস্যা হয়েছে।</p>'; }
+};
+$('btnExportAttExcel').onclick = async () => {
+  const monthStr = $('reportMonth').value; if(!monthStr) { alert("মাস সিলেক্ট করুন"); return; }
+  try {
+    const opsSnap = await get(ref(db, 'operators')); const attSnap = await get(ref(db, 'attendance'));
+    const ops = opsSnap.val() || {}; const atts = attSnap.val() || {};
+    const [year, month] = monthStr.split('-'); const daysInMonth = new Date(year, month, 0).getDate();
+    const excelData = [["Operator ID", "Name", "Station", "Present", "Rest", "Leave", "Absent", "Not Marked"]];
+    Object.keys(ops).forEach(opId => {
+      let presentDays = 0, restDays = 0, leaveDays = 0, absentDays = 0;
+      Object.keys(atts).forEach(date => {
+        if(date.startsWith(monthStr) && atts[date][opId]) {
+           const s = atts[date][opId].status;
+           if(s === 'rest') restDays++; else if(s === 'leave') leaveDays++; else if(s === 'absent') absentDays++; else presentDays++;
+        }
+      });
+      excelData.push([opId, ops[opId].name, ops[opId].stn, presentDays, restDays, leaveDays, absentDays, daysInMonth - (presentDays+restDays+leaveDays+absentDays)]);
+    });
+    const ws = XLSX.utils.aoa_to_sheet(excelData); const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Attendance"); XLSX.writeFile(wb, `ARTS_Attendance_${monthStr}.xlsx`);
+  } catch(e) { alert("এক্সেল তৈরি সমস্যা।"); }
+};
+$('btnExportTrainExcel').onclick = async () => {
+  const monthStr = $('reportMonth').value; if(!monthStr) { alert("মাস সিলেক্ট করুন"); return; }
+  try {
+    const trainSnap = await get(ref(db, 'trains')); const trains = trainSnap.val() || {};
+    const excelData = [["Train No", "Train Name", "Platform", "Destination", "Station", "Departure", "Expected", "Delayed", "Weekly Off", "In-Charge", "Departed", "Added By", "Date"]];
+    Object.values(trains).forEach(t => {
+      const d = new Date(t.at); const dateStr = d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+      if(dateStr.startsWith(monthStr)) { excelData.push([t.no, t.name, t.platform||'N/A', t.destination||'N/A', t.station||'N/A', t.dep, t.depExp, t.depDelay, t.weeklyOff, t.inCharge||'N/A', t.departed?'Yes':'No', t.by, dateStr]); }
+    });
+    const ws = XLSX.utils.aoa_to_sheet(excelData); const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Trains"); XLSX.writeFile(wb, `ARTS_Trains_${monthStr}.xlsx`);
+  } catch(e) { alert("এক্সেল তৈরি সমস্যা।"); }
+};
+
+$('btnIn').onclick = async () => { $('camModal').classList.remove('hide'); try { videoStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } }); $('camera').srcObject = videoStream; } catch (err) { alert("ক্যামেরার অনুমতি দিন!"); $('camModal').classList.add('hide'); } };
+$('btnCapture').onclick = () => { const video = $('camera'), canvas = $('canvas'), context = canvas.getContext('2d'); context.drawImage(video, 0, 0, 200, 200); const photoData = canvas.toDataURL('image/jpeg', 0.6); if (videoStream) videoStream.getTracks().forEach(t => t.stop()); $('camModal').classList.add('hide'); if (navigator.geolocation) { navigator.geolocation.getCurrentPosition((p) => saveCheckIn(photoData, p.coords.latitude, p.coords.longitude), () => saveCheckIn(photoData, null, null), { enableHighAccuracy: true, timeout: 5000 }); } else { saveCheckIn(photoData, null, null); } };
+$('btnCancelCam').onclick = () => { if (videoStream) videoStream.getTracks().forEach(t => t.stop()); $('camModal').classList.add('hide'); };
+function saveCheckIn(photoData, lat, lng) { const key = todayKey(); const data = { phone: me.id, name: me.name, stn: me.stn, desig: me.desig, in: timeNow(), date: key, photo: photoData, status: 'working' }; if (lat && lng) { data.lat = lat; data.lng = lng; } set(ref(db,'attendance/'+key+'/'+me.id), data); alert("✅ Check In সফল!"); }
+$('btnOut').onclick = ()=>{ const key = todayKey(); update(ref(db,'attendance/'+key+'/'+me.id), { out: timeNow() }); };
+$('btnRest').onclick = ()=>{ if(!confirm("আজ আপনি রেস্ট / অফ-ডেতে?")) return; const key = todayKey(); set(ref(db,'attendance/'+key+'/'+me.id), { phone: me.id, name: me.name, stn: me.stn, desig: me.desig, date: key, status: 'rest' }); alert("🏖️ রেস্ট ডে সেট হয়েছে।"); };
+
+function loadChat(){ 
+    onValue(query(ref(db,'chat'), limitToLast(100)), snap=>{ 
+        const box = $('chatBox'); 
+        const d = snap.val()||{}; 
+        const arr = Object.values(d).sort((a,b)=>a.at-b.at); 
+        currentChatArray = arr; 
+
+        if (arr.length > 0) {
+            const latestMsg = arr[arr.length - 1];
+            if (latestMsg.uid !== me.id && latestMsg.at > lastChatTime) {
+                const chatTabActive = document.querySelector('nav button[data-tab="chat"]').classList.contains('active');
+                if (!chatTabActive) {
+                    document.querySelector('nav button[data-tab="chat"]').classList.add('chat-notification');
+                }
+            }
+        }
+
+        box.innerHTML = arr.map(m => {
+            let content = '';
+            if (m.image) {
+                content += `<div class="tx" style="padding:5px;"><img src="${m.image}" onerror="this.style.display='none'"></div>`;
+            }
+            if (m.text) {
+                content += `<div class="tx">${escapeHtml(m.text)}</div>`;
+            }
+            if (!content) content = '<div class="tx">(Empty Message)</div>';
+
+            return `<div class="msg ${m.uid===me.id?'me':''}"><div class="nm">${m.name} • ${new Date(m.at).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}</div>${content}</div>`;
+        }).join(''); 
+        
+        box.scrollTop = box.scrollHeight; 
+    }); 
+}
+
+function escapeHtml(s){ return s.replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function sendMsg(){ 
+    const t = $('chatMsg').value.trim(); 
+    if(!t) return; 
+    push(ref(db,'chat'), { uid: me.id, name: me.name, text: t, at: Date.now() }); 
+    $('chatMsg').value=''; 
+}
+
+$('btnChatCamera').onclick = () => $('chatImageFile').click();
+
+$('chatImageFile').onchange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        try {
+            const imageBase64 = await resizeImage(file, 400, 400);
+            push(ref(db,'chat'), { uid: me.id, name: me.name, image: imageBase64, at: Date.now() });
+            e.target.value = ''; 
+        } catch (err) {
+            alert("ছবি পাঠাতে সমস্যা হয়েছে: " + err.message);
+        }
+    }
+};
+
+$('btnSend').onclick = sendMsg; 
+$('chatMsg').addEventListener('keydown', e=>{ if(e.key==='Enter') sendMsg(); });
+
+// ================== LEAVE APPLICATION & EMPLOYEE RECORDS LOGIC ==================
+
+$('btnLeaveApp').onclick = async () => {
+    $('leaveAppName').textContent = me.name || '-';
+    $('leaveAppStn').textContent = me.stn || '-';
+    $('leaveAppAddress').textContent = me.address || 'উল্লেখ নেই';
+    $('leaveAppDesig').textContent = me.desig || 'Computer Operator';
+    $('leaveAppMobile').textContent = me.id || '-';
+    
+    $('leaveFromDate').value = '';
+    $('leaveToDate').value = '';
+    $('leaveAppReason').value = '';
+    
+    $('hrAuthStatus').textContent = 'Pending';
+    $('authStatus').textContent = 'Pending';
+    $('btnHrApprove').classList.add('hide'); $('btnHrReject').classList.add('hide');
+    $('btnAuthApprove').classList.add('hide'); $('btnAuthReject').classList.add('hide');
+    
+    if (isAdmin) {
+        try {
+            const snap = await get(ref(db, 'leave_applications'));
+            const apps = snap.val() || {};
+            let pendingHtml = '<h4 style="color:#ef4444; font-size:13px; margin-top:10px; margin-bottom:5px;">Pending Applications (Admin View)</h4>';
+            let hasPending = false;
+            Object.entries(apps).forEach(([appId, app]) => {
+                if (app.status === 'pending') {
+                    hasPending = true;
+                    pendingHtml += `<div style="background:rgba(40, 10, 10, 0.3); backdrop-filter: blur(10px); padding:8px; border-radius:8px; margin-bottom:5px; border:1px solid rgba(255, 150, 150, 0.15); text-align:left; font-size:11px;">
+                        <b>${app.name}</b> (${app.stn})<br>
+                        Date: ${app.fromDate} to ${app.toDate}<br>
+                        Reason: ${app.reason}<br>
+                        <button class="auth-btn auth-approve" onclick="window.approveLeave('${appId}', 'hr')">HR Approve</button>
+                        <button class="auth-btn auth-reject" onclick="window.rejectLeave('${appId}', 'hr')">HR Reject</button>
+                        <button class="auth-btn auth-approve" onclick="window.approveLeave('${appId}', 'auth')">Auth Approve</button>
+                        <button class="auth-btn auth-reject" onclick="window.rejectLeave('${appId}', 'auth')">Auth Reject</button>
+                    </div>`;
+                }
+            });
+            if (!hasPending) pendingHtml += '<p style="font-size:11px; color:#fca5a5;">No pending applications.</p>';
+            
+            const modalContent = document.querySelector('#leaveAppModal .card');
+            if (!document.getElementById('adminPendingSection')) {
+                const adminDiv = document.createElement('div');
+                adminDiv.id = 'adminPendingSection';
+                adminDiv.innerHTML = pendingHtml;
+                modalContent.insertBefore(adminDiv, modalContent.lastElementChild);
+            } else {
+                document.getElementById('adminPendingSection').innerHTML = pendingHtml;
+            }
+        } catch(e) {
+            console.log("Error fetching leave applications:", e);
+        }
+    }
+    
+    $('leaveAppModal').classList.remove('hide');
+};
+
+$('btnCloseLeaveApp').onclick = () => $('leaveAppModal').classList.add('hide');
+
+$('btnSubmitLeaveApp').onclick = async () => {
+    const fromDate = $('leaveFromDate').value;
+    const toDate = $('leaveToDate').value;
+    const reason = $('leaveAppReason').value;
+    
+    if (!fromDate || !toDate || !reason) {
+        alert("সব তথ্য পূরণ করুন!");
+        return;
+    }
+    
+    const appData = {
+        employeeId: me.id,
+        name: me.name,
+        stn: me.stn,
+        desig: me.desig,
+        address: me.address || 'উল্লেখ নেই',
+        mobile: me.id,
+        fromDate: fromDate,
+        toDate: toDate,
+        reason: reason,
+        status: 'pending',
+        hrStatus: 'pending',
+        authStatus: 'pending',
+        submittedAt: Date.now()
+    };
+    
+    await push(ref(db, 'leave_applications'), appData);
+    alert("✅ ছুটির আবেদন সফলভাবে জমা হয়েছে!");
+    $('leaveAppModal').classList.add('hide');
+};
+
+window.approveLeave = async (appId, role) => {
+    const adminName = me.name || 'Admin';
+    if (role === 'hr') {
+        await update(ref(db, 'leave_applications/' + appId), { hrStatus: 'approved', hrApprovedBy: adminName });
+    } else {
+        await update(ref(db, 'leave_applications/' + appId), { authStatus: 'approved', authApprovedBy: adminName });
+    }
+    alert(`✅ ${role === 'hr' ? 'HR' : 'Authorized'} Approved!`);
+    $('btnLeaveApp').click(); 
+};
+
+window.rejectLeave = async (appId, role) => {
+    const adminName = me.name || 'Admin';
+    if (role === 'hr') {
+        await update(ref(db, 'leave_applications/' + appId), { hrStatus: 'rejected', hrApprovedBy: adminName });
+    } else {
+        await update(ref(db, 'leave_applications/' + appId), { authStatus: 'rejected', authApprovedBy: adminName });
+    }
+    alert(`❌ ${role === 'hr' ? 'HR' : 'Authorized'} Rejected!`);
+    $('btnLeaveApp').click(); 
+};
+
+$('btnEmployeeRecords').onclick = async () => {
+    $('empRecordList').classList.remove('hide');
+    $('empRecordDetail').classList.add('hide');
+    $('empRecordList').innerHTML = '<p style="text-align:center; color:#fca5a5; padding: 20px;">লোড হচ্ছে...</p>';
+    
+    try {
+        const opsSnap = await get(ref(db, 'operators'));
+        const ops = opsSnap.val() || {};
+        
+        if (Object.keys(ops).length === 0) {
+            $('empRecordList').innerHTML = '<p style="text-align:center; color:#fca5a5; padding: 20px;">কোনো কর্মকর্তা নেই।</p>';
+        } else {
+            let listHtml = '';
+            Object.entries(ops).forEach(([id, op]) => {
+                listHtml += `
+                    <div class="emp-list-item" onclick="window.showEmpDetail('${id}')">
+                        <div>
+                            <div style="font-size:13px; font-weight:bold; color:#fff;">${op.name}</div>
+                            <div style="font-size:11px; color:#fca5a5;">${op.stn} | ${op.desig}</div>
+                        </div>
+                        <div style="font-size:18px; color:#ef4444;">➔</div>
+                    </div>`;
+            });
+            $('empRecordList').innerHTML = listHtml;
+        }
+    } catch(e) {
+        console.log("Error fetching operators:", e);
+        $('empRecordList').innerHTML = '<p style="text-align:center; color:#fca5a5; padding: 20px;">লোড করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।</p>';
+    }
+    
+    $('empRecordModal').classList.remove('hide');
+};
+
+window.showEmpDetail = async (opId) => {
+    $('empRecordList').classList.add('hide');
+    $('empRecordDetail').classList.remove('hide');
+    
+    try {
+        const opSnap = await get(ref(db, 'operators/' + opId));
+        const op = opSnap.val();
+        if (!op) return;
+        
+        const attSnap = await get(ref(db, 'attendance'));
+        const allAtts = attSnap.val() || {};
+        let historyHtml = '';
+        let presentCount = 0, leaveCount = 0, absentCount = 0;
+        
+        Object.keys(allAtts).sort().reverse().forEach(date => {
+            if (allAtts[date][opId]) {
+                const att = allAtts[date][opId];
+                let statusText = '';
+                if (att.status === 'rest') { statusText = '🏖️ Rest'; }
+                else if (att.status === 'leave') { statusText = '✈️ Leave'; leaveCount++; }
+                else if (att.status === 'absent') { statusText = '🔴 Absent'; absentCount++; }
+                else { statusText = '🟢 Present'; presentCount++; }
+                
+                historyHtml += `
+                    <div style="display:flex; justify-content:space-between; font-size:11px; border-bottom:1px solid rgba(255, 150, 150, 0.1); padding:5px 0;">
+                        <span>${date}</span>
+                        <span>${statusText}</span>
+                    </div>`;
+            }
+        });
+        
+        if (!historyHtml) historyHtml = '<p style="font-size:11px; color:#fca5a5;">No attendance history found.</p>';
+        
+        const photoUrl = op.photo ? op.photo : 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+        const historyText = op.history ? op.history : 'কোনো হিস্ট্রি লেখা নেই।';
+        
+        let editBtn = isAdmin ? `<button class="auth-btn auth-approve" style="width:100%; margin-top:15px; padding:10px; font-size:13px; border-radius:8px;" onclick="window.startEditEmployee('${opId}')">✏️ Edit Employee Info</button>` : '';
+        
+        $('empRecordDetail').innerHTML = `
+            <div class="emp-detail-view">
+                <div class="emp-profile-header">
+                    <div class="emp-photo-container">
+                        <img src="${photoUrl}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'">
+                    </div>
+                    <div class="emp-info-container">
+                        <h4>${op.name}</h4>
+                        <div class="emp-detail-row"><span>পদবি:</span> ${op.desig}</div>
+                        <div class="emp-detail-row"><span>কর্মস্থল:</span> ${op.stn}</div>
+                        <div class="emp-detail-row"><span>ঠিকানা:</span> ${op.address || 'উল্লেখ নেই'}</div>
+                        <div class="emp-detail-row"><span>মোবাইল:</span> ${op.id}</div>
+                    </div>
+                </div>
+                
+                <div class="emp-history-section">
+                    <h5>📝 কর্মকর্তার হিস্ট্রি / Employee History</h5>
+                    <div class="emp-history-text">${historyText}</div>
+                </div>
+                
+                <div class="emp-history-section">
+                    <h5>📅 অ্যাটেনডেন্স হিস্ট্রি / Attendance History</h5>
+                    <div style="max-height:25vh; overflow-y:auto; background:rgba(10,0,0,0.3); padding:8px; border-radius:8px; border:1px solid rgba(255, 150, 150, 0.1);">
+                        ${historyHtml}
+                    </div>
+                    <div style="display:flex; justify-content:space-between; font-size:10px; margin-top:8px; color:#fca5a5;">
+                        <span>Present: ${presentCount}</span>
+                        <span>Leave: ${leaveCount}</span>
+                        <span>Absent: ${absentCount}</span>
+                    </div>
+                </div>
+                
+                ${editBtn}
+                <button class="btn blue" style="margin-top:15px; padding:10px; font-size:13px; border-radius:8px;" onclick="window.backToEmpList()">⬅️ Back to List</button>
+            </div>
+        `;
+    } catch(e) {
+        console.log("Error showing details:", e);
+        $('empRecordDetail').innerHTML = '<p style="text-align:center; color:#fca5a5; padding: 20px;">তথ্য লোড করা যায়নি।</p>';
+    }
+};
+
+window.backToEmpList = () => {
+    $('empRecordList').classList.remove('hide');
+    $('empRecordDetail').classList.add('hide');
+};
+
+window.startEditEmployee = async (opId) => {
+    const opSnap = await get(ref(db, 'operators/' + opId));
+    const op = opSnap.val();
+    if (!op) return;
+    
+    const photoUrl = op.photo ? op.photo : 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+    const historyText = op.history ? op.history : '';
+    
+    $('empRecordDetail').innerHTML = `
+        <div class="emp-detail-view">
+            <h4 style="color:#ef4444; text-align:center; margin-bottom:15px;">✏️ Edit Employee Info</h4>
+            
+            <div class="photo-upload-wrap" style="margin-bottom:20px; text-align:center;">
+                <img id="editEmpPhotoPreview" src="${photoUrl}" style="width:100px; height:100px; border-radius:12px; object-fit:cover; border:1px solid rgba(255, 150, 150, 0.3); margin-bottom:8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <label class="edit-mode-label">ছবি পরিবর্তন করুন (Upload New Photo)</label>
+                <input type="file" id="editEmpPhotoFile" accept="image/*" style="margin: 0 auto; background: transparent; border: none; color: #fca5a5;">
+            </div>
+            
+            <label class="edit-mode-label">নাম (Name)</label>
+            <input type="text" id="editEmpName" class="edit-mode-input" value="${op.name}">
+            
+            <label class="edit-mode-label">পদবি (Designation)</label>
+            <input type="text" id="editEmpDesig" class="edit-mode-input" value="${op.desig}">
+            
+            <label class="edit-mode-label">কর্মস্থল (Station)</label>
+            <input type="text" id="editEmpStn" class="edit-mode-input" value="${op.stn}">
+            
+            <label class="edit-mode-label">ঠিকানা (Address)</label>
+            <input type="text" id="editEmpAddress" class="edit-mode-input" value="${op.address || 'উল্লেখ নেই'}">
+            
+            <label class="edit-mode-label">হিস্ট্রি / নোট (Employee History Paragraph)</label>
+            <textarea id="editEmpHistory" class="edit-mode-input" rows="5" placeholder="এখানে কর্মকর্তার বিস্তারিত হিস্ট্রি লিখুন...">${historyText}</textarea>
+            
+            <button class="auth-btn auth-approve" style="width:100%; padding:12px; font-size:14px; margin-top:15px; border-radius:8px;" onclick="window.saveEmployeeEdit('${opId}')">💾 Save Changes</button>
+            <button class="btn blue" style="margin-top:15px; padding:10px; font-size:13px; border-radius:8px;" onclick="window.showEmpDetail('${opId}')">❌ Cancel</button>
+        </div>
+    `;
+    
+    document.getElementById('editEmpPhotoFile').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('editEmpPhotoPreview').src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+};
+
+function resizeImage(file, maxWidth, maxHeight) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+                if (width > height) {
+                    if (width > maxWidth) { height = Math.round(height * maxWidth / width); width = maxWidth; }
+                } else {
+                    if (height > maxHeight) { width = Math.round(width * maxHeight / height); height = maxHeight; }
+                }
+                canvas.width = width; canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+                resolve(canvas.toDataURL('image/jpeg', 0.6));
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+window.saveEmployeeEdit = async (opId) => {
+    const newName = $('editEmpName').value.trim();
+    const newDesig = $('editEmpDesig').value.trim();
+    const newStn = $('editEmpStn').value.trim();
+    const newAddress = $('editEmpAddress').value.trim();
+    const newHistory = $('editEmpHistory').value.trim();
+    
+    if (!newName || !newDesig || !newStn) {
+        alert("❌ নাম, পদবি এবং কর্মস্থল অবশ্যই পূরণ করতে হবে!");
+        return;
+    }
+    
+    let photoBase64 = null;
+    const fileInput = $('editEmpPhotoFile');
+    if (fileInput.files && fileInput.files[0]) {
+        photoBase64 = await resizeImage(fileInput.files[0], 150, 150);
+    }
+    
+    const updateData = {
+        name: newName,
+        desig: newDesig,
+        stn: newStn,
+        address: newAddress || 'উল্লেখ নেই',
+        history: newHistory
+    };
+    
+    if (photoBase64) {
+        updateData.photo = photoBase64;
+    }
+    
+    try {
+        await update(ref(db, 'operators/' + opId), updateData);
+        alert("✅ Employee info updated successfully!");
+        window.showEmpDetail(opId);
+    } catch (e) {
+        alert("❌ Error updating data: " + e.message);
+    }
+};
+
+$('btnCloseEmpRecord').onclick = () => $('empRecordModal').classList.add('hide');
+
+// ================== END OF NEW FEATURES ==================
+
+function loadCompanyInfo() {
+   $('companyDesc').innerHTML = "আমরা একটি রেলওয়ে অপারেটর সেবা প্রদানকারী প্রতিষ্ঠান। আমাদের লক্ষ্য হলো রেলযাত্রীদের নিরাপদ ও সময়মতো সেবা নিশ্চিত করা।";
+   const officers = [
+      { name: "মোঃ আশরাফ উদ্দিন", desig: "চেয়ারম্যান", phone: "01700000001", photo: "" },
+      { name: "মোঃ নূর উদ্দিন", desig: "এমডি", phone: "01700000002", photo: "" },
+      { name: "মোরা মাহমুদ", desig: "ম্যানেজার", phone: "01700000003", photo: "" },
+      { name: "সালেহ আহমেদ", desig: "অপারেশন ইনচার্জ", phone: "01700000004", photo: "" },
+      { name: "জুয়েল হাওলাদার", desig: "সিনিয়র টেকনিশিয়ান", phone: "01700000005", photo: "" }
+   ];
+   const list = $('officerList'); if(!list) return;
+   list.innerHTML = officers.map(o => {
+      const photoUrl = o.photo ? o.photo : 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+      return `<div class="officer-card">
+         <img src="${photoUrl}" class="officer-thumb" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149271.png'">
+         <div class="officer-info">
+            <div class="officer-name">${o.name}</div>
+            <div class="officer-desig">${o.desig}</div>
+         </div>
+         <a href="tel:${o.phone}" class="officer-call-btn"><span>📞</span> Call</a>
+      </div>`;
+   }).join('');
+}
+
+$('btnShare').onclick = async ()=>{ const url = location.href; if(navigator.share){ try{ await navigator.share({ title:'ARTS BD LTD - Railway Operator App', text:'আমাদের অপারেটর অ্যাপ', url }); }catch(e){} } else { await navigator.clipboard.writeText(url); alert('লিংক কপি হয়েছে!'); } };
+$('btnLogout').onclick = ()=>{ localStorage.removeItem('arts_user'); location.reload(); };
+if(me) startApp();
+</script>
+</body>
+</html>
